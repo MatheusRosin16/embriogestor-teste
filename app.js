@@ -3698,3 +3698,202 @@ function egAtualizarInterfacePerfil(){
 egReconciliarMovimentacoesSemenAuto();
 recalcularTodosEstoques();
 localStorage.setItem(DB_KEY,JSON.stringify(db));
+ORREÇÃO FINAL — OBSERVAÇÃO MANUAL NOS RELATÓRIOS
+Cole este bloco NO FINAL do app.js.
+Isso é importante porque o app.js possui funções repetidas; as últimas definições prevalecem.
+
+// ============================================================
+// CORREÇÃO FINAL — COLE NO FINAL DO app.js
+// ============================================================
+
+function blocoPeriodoRelatorio(clienteId,tipo,titulo){
+  const h=hoje();
+  return `<div class="report-choice"><h3>${titulo}</h3>
+    <label>Período</label>
+    <select id="rel_${tipo}_tipo" onchange="atualizarPeriodoRel('${tipo}')">
+      <option value="dia">Dia</option>
+      <option value="mes">Mês</option>
+      <option value="ano">Ano</option>
+    </select>
+    <div id="rel_${tipo}_dia_wrap"><label>Data</label><input id="rel_${tipo}_dia" type="date" value="${h}"></div>
+    <div id="rel_${tipo}_mes_wrap" style="display:none"><label>Mês</label><input id="rel_${tipo}_mes" type="month" value="${h.slice(0,7)}"></div>
+    <div id="rel_${tipo}_ano_wrap" style="display:none"><label>Ano</label><input id="rel_${tipo}_ano" type="number" min="2000" max="2100" value="${h.slice(0,4)}"></div>
+
+    <label>Observação do relatório</label>
+    <textarea id="rel_${tipo}_obs" rows="4"
+      placeholder="Digite uma observação para este relatório..."
+      style="width:100%;resize:vertical;"></textarea>
+
+    <button class="btn" onclick="gerarRelatorioPeriodo('${clienteId}','${tipo}')">Gerar relatório</button>
+  </div>`;
+}
+
+function gerarRelatorioPeriodo(clienteId,tipo){
+  const periodoTipo=document.getElementById(`rel_${tipo}_tipo`)?.value||"dia";
+  const valor=document.getElementById(`rel_${tipo}_${periodoTipo}`)?.value||"";
+  const observacaoRelatorio=document.getElementById(`rel_${tipo}_obs`)?.value?.trim()||"";
+
+  if(!valor){alert("Informe o período.");return;}
+
+  if(tipo==="producao") relatorioProducao(clienteId,valor,periodoTipo,observacaoRelatorio);
+  else if(tipo==="congelamento") relatorioCongelamento(clienteId,valor,periodoTipo,observacaoRelatorio);
+  else relatorioTransferencia(clienteId,valor,periodoTipo,observacaoRelatorio);
+}
+
+function relatorioProducao(clienteId,valor,tipo="dia",observacaoRelatorio=""){
+  const cliente=db.clientes.find(x=>x.id===clienteId);if(!cliente)return;
+  const dados=db.producoes.filter(x=>x.clienteId===clienteId&&dataNoPeriodo(x.data,tipo,valor));
+  if(!dados.length){alert("Não há produção cadastrada para este cliente no período selecionado.");return;}
+
+  const corpo=grupoRelatorioPorData(dados,(itens)=>{
+    const t=totaisProducao(itens);
+    const linhas=itens.map((x,i)=>{
+      const dt=numeroNaoNegativo(x.congeladosDT??x.transferidosDT);
+      const vt=numeroNaoNegativo(x.congeladosVT??x.transferidosVT);
+      return `<tr>
+        <td>${i+1}</td>
+        <td>${esc(doadoraNome(x.doadoraId))}</td>
+        <td>${esc(doadoraRaca(x.doadoraId))}</td>
+        <td>${esc(touroNome(x.touroId))}</td>
+        <td>${esc(touroRaca(x.touroId))}</td>
+        <td>${typeof formatarDose==="function"?formatarDose(x.doseUtilizada):numeroNaoNegativo(x.doseUtilizada)}</td>
+        <td>${numeroNaoNegativo(x.oocitos)}</td>
+        <td>${numeroNaoNegativo(x.oocitosViaveis)}</td>
+        <td>${numeroNaoNegativo(x.clivados)}</td>
+        <td>${percentual(x.clivados,x.oocitosViaveis)}</td>
+        <td>${numeroNaoNegativo(x.embriõesD7)}</td>
+        <td>${percentual(x.embriõesD7,x.oocitosViaveis)}</td>
+        <td>${numeroNaoNegativo(x.transferidosFresco)}</td>
+        <td>${dt}</td><td>${vt}</td>
+      </tr>`;
+    }).join("");
+
+    return `<table class="report-table"><thead><tr>
+      <th>Nº</th><th>DOADORA</th><th>RAÇA DOADORA</th><th>TOURO</th><th>RAÇA TOURO</th>
+      <th>DOSE</th><th>OÓCITOS TOTAIS</th><th>OÓCITOS VIÁVEIS</th><th>CLIVAGEM</th>
+      <th>%CLIV</th><th>EMB. D7</th><th>%PROD</th><th>FRESCO</th><th>DT</th><th>VT</th>
+    </tr></thead><tbody>${linhas}
+      <tr class="total-row">
+        <td colspan="5">TOTAL DO DIA</td>
+        <td>${typeof formatarDose==="function"?formatarDose(t.doseUtilizada):numeroNaoNegativo(t.doseUtilizada)}</td>
+        <td>${t.oocitos}</td><td>${t.oocitosViaveis}</td><td>${t.clivados}</td>
+        <td>${percentual(t.clivados,t.oocitosViaveis)}</td>
+        <td>${t.embriõesD7}</td><td>${percentual(t.embriõesD7,t.oocitosViaveis)}</td>
+        <td>${t.transferidosFresco}</td><td>${t.congeladosDT}</td><td>${t.congeladosVT}</td>
+      </tr>
+    </tbody></table>
+    <div class="report-note"><b>OBS:</b> ${esc(observacoesUnicas(itens)||"-")}</div>`;
+  });
+
+  const g=totaisProducao(dados);
+  const conteudo=`
+    ${cabecalhoRelatorioPeriodo("RELATÓRIO PRODUÇÃO IN VITRO DE EMBRIÕES",cliente,tipo,valor)}
+    ${corpo}
+    <div class="report-grand-total"><b>TOTAL DO PERÍODO:</b>
+      ${dados.length} OPU(s) | Oócitos totais ${g.oocitos} | Viáveis ${g.oocitosViaveis} |
+      Embriões D7 ${g.embriõesD7} | Fresco ${g.transferidosFresco} |
+      DT ${g.congeladosDT} | VT ${g.congeladosVT}
+    </div>
+    ${observacaoRelatorio?`<div class="report-note"><b>OBSERVAÇÃO DO RELATÓRIO:</b> ${esc(observacaoRelatorio)}</div>`:""}
+    ${rodapeSeminna()}
+  `;
+
+  abrirRelatorioFormatado("Relatório de Produção",cliente,valor,conteudo,"landscape");
+}
+
+function relatorioCongelamento(clienteId,valor,tipo="dia",observacaoRelatorio=""){
+  const cliente=db.clientes.find(x=>x.id===clienteId);if(!cliente)return;
+
+  const dados=db.producoes.filter(x=>{
+    const dt=numeroNaoNegativo(x.congeladosDT??x.transferidosDT);
+    const vt=numeroNaoNegativo(x.congeladosVT??x.transferidosVT);
+    return x.clienteId===clienteId&&(dt+vt)>0&&dataNoPeriodo(x.data,tipo,valor);
+  });
+
+  if(!dados.length){alert("Não há congelamentos cadastrados para este cliente no período selecionado.");return;}
+
+  const corpo=grupoRelatorioPorData(dados,(itens)=>{
+    let totalDT=0,totalVT=0;
+    const linhas=itens.map((x,i)=>{
+      const dt=numeroNaoNegativo(x.congeladosDT??x.transferidosDT);
+      const vt=numeroNaoNegativo(x.congeladosVT??x.transferidosVT);
+      totalDT+=dt;totalVT+=vt;
+      return `<tr>
+        <td>${i+1}</td><td>${esc(doadoraNome(x.doadoraId))}</td><td>${esc(doadoraRaca(x.doadoraId))}</td>
+        <td>${esc(touroNome(x.touroId))}</td><td>${esc(touroRaca(x.touroId))}</td>
+        <td>${dt}</td><td>${vt}</td><td>${dt+vt}</td><td>${esc(x.obs||"")}</td>
+      </tr>`;
+    }).join("");
+
+    return `<table class="report-table"><thead><tr>
+      <th>Nº</th><th>DOADORA</th><th>RAÇA DOADORA</th><th>TOURO</th><th>RAÇA TOURO</th>
+      <th>DT</th><th>VT</th><th>TOTAL</th><th>OBS</th>
+    </tr></thead><tbody>${linhas}
+      <tr class="total-row"><td colspan="5">TOTAL DO DIA</td>
+        <td>${totalDT}</td><td>${totalVT}</td><td>${totalDT+totalVT}</td><td></td>
+      </tr>
+    </tbody></table>`;
+  });
+
+  const g=totaisProducao(dados);
+  const conteudo=`
+    ${cabecalhoRelatorioPeriodo("RELATÓRIO DE CONGELAMENTO DE EMBRIÕES",cliente,tipo,valor)}
+    ${corpo}
+    <div class="report-grand-total"><b>TOTAL NO PERÍODO:</b>
+      DT ${g.congeladosDT} | VT ${g.congeladosVT} | Total ${g.congelados}
+    </div>
+    ${observacaoRelatorio?`<div class="report-note"><b>OBSERVAÇÃO DO RELATÓRIO:</b> ${esc(observacaoRelatorio)}</div>`:""}
+    ${rodapeSeminna()}
+  `;
+
+  abrirRelatorioFormatado("Relatório de Congelamento",cliente,valor,conteudo,"landscape");
+}
+
+function relatorioTransferencia(clienteId,valor,tipo="dia",observacaoRelatorio=""){
+  const cliente=db.clientes.find(x=>x.id===clienteId);if(!cliente)return;
+  const dados=db.transferencias.filter(x=>x.clienteId===clienteId&&dataNoPeriodo(x.data,tipo,valor));
+  if(!dados.length){alert("Não há transferências cadastradas para este cliente no período selecionado.");return;}
+
+  const corpo=grupoRelatorioPorData(dados,(itens)=>{
+    const prenhes=itens.filter(x=>x.diagnostico==="Prenhe").length;
+    const vazias=itens.filter(x=>x.diagnostico==="Vazia").length;
+    const pct=itens.length?Math.round(prenhes/itens.length*100):0;
+
+    const linhas=itens.map((x,i)=>`<tr>
+      <td>${i+1}</td><td>${esc(doadoraNome(x.doadoraId))}</td><td>${esc(doadoraRaca(x.doadoraId))}</td>
+      <td>${esc(touroNome(x.touroId))}</td><td>${esc(touroRaca(x.touroId))}</td>
+      <td>${esc(x.embriãoGrau||"")}</td><td>${esc(x.embriãoEstagio||"")}</td>
+      <td>${esc(x.receptora||"")}</td><td>${esc(x.destino||"")}</td><td>${esc(x.diagnostico||"")}</td>
+    </tr>`).join("");
+
+    return `<table class="report-table"><thead><tr>
+      <th>Nº</th><th>DOADORA</th><th>RAÇA DOADORA</th><th>TOURO</th><th>RAÇA TOURO</th>
+      <th>GRAU D7</th><th>ESTÁGIO D7</th><th>RECEPTORA</th><th>DESTINO</th><th>DIAGNÓSTICO</th>
+    </tr></thead><tbody>${linhas}</tbody></table>
+    <table class="report-table report-summary"><tbody>
+      <tr><th>TOTAL</th><th>PRENHAS</th><th>VAZIAS</th><th>% PRENHEZ</th></tr>
+      <tr><td>${itens.length}</td><td>${prenhes}</td><td>${vazias}</td><td>${pct}%</td></tr>
+    </tbody></table>
+    <div class="report-note"><b>OBSERVAÇÕES:</b> ${esc(observacoesUnicas(itens)||"-")}</div>`;
+  });
+
+  const prenhes=dados.filter(x=>x.diagnostico==="Prenhe").length;
+  const vazias=dados.filter(x=>x.diagnostico==="Vazia").length;
+  const pct=dados.length?Math.round(prenhes/dados.length*100):0;
+
+  const conteudo=`
+    ${cabecalhoRelatorioPeriodo("PLANILHA DE TRANSFERÊNCIA DE EMBRIÕES",cliente,tipo,valor)}
+    ${corpo}
+    <div class="report-grand-total"><b>TOTAL DO PERÍODO:</b>
+      ${dados.length} transferências | ${prenhes} prenhas | ${vazias} vazias | ${pct}% prenhez
+    </div>
+    ${observacaoRelatorio?`<div class="report-note"><b>OBSERVAÇÃO DO RELATÓRIO:</b> ${esc(observacaoRelatorio)}</div>`:""}
+    ${rodapeSeminna()}
+  `;
+
+  abrirRelatorioFormatado("Relatório de Transferência",cliente,valor,conteudo,"landscape");
+}
+
+// ============================================================
+// FIM DA CORREÇÃO
+// ============================================================
