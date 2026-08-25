@@ -1,0 +1,22 @@
+EmbrioGestor v2.3 — Perfis e Permissões
+
+NOVO:
+- Perfis: Administrador, Veterinário, Laboratório e Consulta.
+- Usuários e Permissões no menu do Administrador.
+- Usuário pode ser vinculado a um profissional cadastrado.
+- Veterinário/Laboratório/Consulta veem somente clientes vinculados ao seu profissional.
+- Perfil Consulta não pode criar, editar ou excluir registros.
+- Usuários agora ficam dentro do banco do EmbrioGestor e acompanham backup/sincronização do Google Drive.
+- Administrador continua vendo toda a base e pode usar Carteiras por Profissional.
+
+IMPORTANTE AO ATUALIZAR O GITHUB:
+1. NÃO substitua o seu config.js atual. Ele contém o Client ID do Google.
+2. Substitua: index.html, app.js, login.js, login.css, style.css, cloud.js, mobile.js, catalogos.js, sw.js e manifest.webmanifest.
+3. A pasta icons pode ser mantida; pode substituir também sem problema.
+4. Faça um backup no Drive antes da atualização.
+5. Após publicar, abra o endereço com ?v=33 e reconecte o Google Drive se necessário.
+
+MIGRAÇÃO:
+- Clientes, doadoras, touros, estoques, produções, transferências e demais dados atuais são preservados.
+- O administrador criado na versão anterior é migrado para db.usuarios na primeira abertura.
+- Depois dessa migração, usuários/perfis passam a fazer parte do backup do Drive.

@@ -1,0 +1,19 @@
+EMBRIOGESTOR v1.7 - CORRECAO DE NAVEGACAO
+
+Problema corrigido:
+- Dashboard, Movimentacoes, Aspiracao de Oocitos, Producao de Embrioes, Transferencia de Embrioes e Relatorios nao respondiam aos cliques.
+
+Causa:
+- Existia uma chamada antiga de render() no meio do app.js, antes da inicializacao do filtro global da versao 1.6.
+- Como as funcoes mais novas eram resolvidas antes da inicializacao da variavel filtroGlobal, o JavaScript interrompia a execucao durante o carregamento.
+
+Correcao:
+- Removida a inicializacao antecipada.
+- Mantida uma unica chamada render() no final do arquivo, depois de todas as variaveis e funcoes estarem inicializadas.
+- Nenhum cadastro ou estrutura de banco foi removido.
+
+Validacoes realizadas:
+- node --check app.js: OK
+- avaliacao completa de catalogos.js + app.js com DOM/localStorage simulados: OK
+- menu gerado: OK
+- Dashboard inicializado sem erro: OK

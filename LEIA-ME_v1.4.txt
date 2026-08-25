@@ -1,0 +1,38 @@
+EMBRIOGESTOR v1.4
+
+COMO ABRIR
+1. Extraia o ZIP inteiro para uma pasta.
+2. Abra o arquivo index.html no Google Chrome ou Microsoft Edge.
+3. Os dados continuam salvos no navegador (localStorage).
+
+ANTES DE ATUALIZAR
+- Na versão antiga, use Exportar backup e guarde o arquivo JSON.
+- A versão 1.4 usa o banco embriogestor_v6 e tenta migrar automaticamente bancos v5/v4/v3/v2/v1.
+
+RELATÓRIOS POR DATA
+1. Abra Relatórios.
+2. Pesquise e selecione o cliente.
+3. Em cada tipo de relatório, selecione a DATA.
+4. Clique em Gerar relatório do dia.
+5. O relatório conterá somente registros daquele cliente naquela data.
+
+EXPORTAR PDF
+1. Gere o relatório desejado.
+2. Clique em Exportar em PDF.
+3. Na janela de impressão do navegador, escolha Salvar como PDF.
+4. Papel: A4. O sistema já prepara o relatório em orientação paisagem.
+
+PRODUÇÃO DE EMBRIÕES
+- Transferidos a fresco, DT e VT são campos separados.
+- Embriões congelados e tipo do congelamento permanecem separados.
+- As quantidades são validadas para não ultrapassar os embriões viáveis D7.
+
+TRANSFERÊNCIA
+Destinos disponíveis:
+- TRANSFERENCIA A FRESCO
+- TRANSFERENCIA DT
+- TRANSFERENCIA VT
+- DESCARTADO
+
+MODELOS DE RELATÓRIO
+- A apresentação foi inspirada nos modelos fornecidos pelo usuário: cabeçalho técnico, tabela com cabeçalho azul, totais, observações e resumo quando aplicável.

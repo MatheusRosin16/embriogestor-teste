@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#173b5c">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="EmbrioGestor">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <title>EmbrioGestor</title>
+
+  <link rel="stylesheet" href="style.css?v=40">
+  <link rel="stylesheet" href="login.css?v=40">
+
+</head>
+
+<body>
+
+  <div id="mobileOverlay" class="mobile-overlay" onclick="fecharMenuMobile()"></div>
+
+  <aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+
+      <div class="logo logo-img"><img src="logo-seminna.png" alt="Sêminna"></div>
+
+      <div>
+
+        <h1>
+          EmbrioGestor
+        </h1>
+
+        <small>
+          Gestão Reprodutiva
+        </small>
+
+      </div>
+
+    </div>
+
+
+    <nav id="menu"></nav>
+
+
+    <div class="sidebar-footer">
+
+      Dados locais + Google Drive opcional
+
+    </div>
+
+  </aside>
+
+
+  <main class="main">
+
+    <header class="topbar">
+
+      <div class="topbar-main">
+        <button id="mobileMenuBtn" class="mobile-menu-btn" type="button" aria-label="Abrir menu" onclick="alternarMenuMobile()">☰</button>
+        <div>
+
+        <h2 id="pageTitle">
+          Dashboard
+        </h2>
+
+        <p id="pageSubtitle">
+          Visão geral do laboratório
+        </p>
+        </div>
+      </div>
+
+
+      <div class="topbar-actions">
+
+        <button id="installAppBtn" class="btn secondary install-app-btn" type="button" hidden>Instalar aplicativo</button>
+        <button class="btn secondary" onclick="exportarBackup()">
+          Exportar backup
+        </button>
+
+      </div>
+
+    </header>
+
+
+    <section id="content"></section>
+
+  </main>
+
+
+  <script src="config.js"></script>
+  <script src="catalogos.js?v=40"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="app.js?v=40"></script>
+  <script src="importador.js?v=40"></script>
+  <script src="cloud.js?v=40"></script>
+  <script src="mobile.js?v=40"></script>
+  <script src="login.js?v=40"></script>
+
+</body>
+
+</html>

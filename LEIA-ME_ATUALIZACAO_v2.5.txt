@@ -1,0 +1,25 @@
+EMBRIOGESTOR v2.5 — ACESSO DO CLIENTE
+
+Nova regra de acesso:
+- Administrador: acesso total.
+- Consulta: login vinculado diretamente a um único cliente e somente leitura.
+
+Como criar acesso de um cliente:
+1. Entre como Administrador.
+2. Abra Clientes.
+3. Localize o cliente e clique em "Acesso do cliente".
+4. Informe usuário e senha e salve.
+5. Entregue essas credenciais ao cliente.
+
+O usuário de Consulta enxerga somente os dados daquele cliente em Dashboard, Doadoras,
+Estoque de Sêmen, Estoque de Embriões, Produções, Transferências e Relatórios.
+Ele não pode criar, editar nem excluir registros.
+
+IMPORTANTE SOBRE GOOGLE DRIVE:
+O Google Drive continua preservado para backup e sincronização do Administrador.
+Não substitua o config.js que já contém o Client ID do Google.
+
+LIMITAÇÃO ATUAL:
+O banco ainda é local ao navegador e sincronizado manualmente pelo Drive. Portanto, um cliente
+que abrir o sistema em um aparelho novo não receberá automaticamente os dados do laboratório.
+Para acesso remoto independente por vários clientes, a evolução correta é um banco online central.

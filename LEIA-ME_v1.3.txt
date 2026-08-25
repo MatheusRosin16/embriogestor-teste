@@ -1,0 +1,17 @@
+EMBRIOGESTOR v1.3
+
+COMO USAR
+1. Extraia todo o conteúdo do ZIP para uma pasta.
+2. Abra o arquivo index.html no Google Chrome ou Microsoft Edge.
+3. Os dados ficam salvos no navegador deste computador.
+
+IMPORTANTE ANTES DE ATUALIZAR
+- Na versão antiga, clique em "Exportar backup" e guarde o arquivo JSON.
+- Esta versão também migra automaticamente dados salvos nas versões anteriores no mesmo navegador.
+
+PRINCIPAIS NOVIDADES
+- Cliente filtra Doadoras em Produção, OPU e Transferência.
+- Campo Registro em Doadoras.
+- Embriões transferidos a fresco no lugar de DT/VT.
+- Edição e exclusão em todos os módulos operacionais.
+- Estoque recalculado após edição/exclusão de movimentações.

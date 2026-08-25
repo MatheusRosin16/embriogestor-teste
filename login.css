@@ -1,0 +1,81 @@
+/* EmbrioGestor - tela de login isolada do layout principal */
+html.eg-auth-locked, body.eg-auth-locked { overflow: hidden !important; }
+.eg-auth-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483000 !important;
+  width: 100vw !important;
+  height: 100dvh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.eg-login-page {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  box-sizing: border-box !important;
+  overflow: auto !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 28px 20px 92px !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  background:
+    radial-gradient(circle at 82% 20%, rgba(102,175,224,.42), transparent 36%),
+    linear-gradient(135deg,#173f61 0%,#205b8b 52%,#347fbd 100%) !important;
+}
+.eg-login-card {
+  position: relative !important;
+  width: min(480px, calc(100vw - 32px)) !important;
+  max-width: 480px !important;
+  margin: auto !important;
+  box-sizing: border-box !important;
+  background: rgba(255,255,255,.97) !important;
+  border: 1px solid rgba(255,255,255,.8) !important;
+  border-radius: 24px !important;
+  padding: 32px 36px !important;
+  box-shadow: 0 25px 60px rgba(0,30,55,.32) !important;
+}
+.eg-login-brand { text-align: center !important; margin-bottom: 22px !important; }
+.eg-login-brand img { display:block !important; width:90px !important; max-width:90px !important; height:auto !important; margin:0 auto 10px !important; }
+.eg-login-brand h1 { margin:0 !important; padding:0 !important; font-size:34px !important; line-height:1.15 !important; font-weight:800 !important; color:#173f61 !important; }
+.eg-login-brand p { margin:7px 0 0 !important; color:#647483 !important; font-size:14px !important; }
+.eg-login-card h2 { margin:20px 0 7px !important; text-align:center !important; font-size:25px !important; color:#173f61 !important; }
+.eg-login-sub { margin:0 0 24px !important; text-align:center !important; color:#687887 !important; font-size:15px !important; line-height:1.5 !important; }
+.eg-login-card label { display:block !important; margin:14px 0 7px !important; color:#2f79bb !important; font-size:12px !important; font-weight:800 !important; text-transform:uppercase !important; }
+.eg-login-card input { display:block !important; width:100% !important; height:50px !important; box-sizing:border-box !important; padding:0 15px !important; border:1px solid #c9d8e5 !important; border-radius:11px !important; background:#fff !important; color:#173f61 !important; font-size:16px !important; outline:none !important; }
+.eg-login-card input:focus { border-color:#347fbd !important; box-shadow:0 0 0 4px rgba(52,127,189,.13) !important; }
+.eg-password-wrap { position:relative !important; }
+.eg-password-wrap input { padding-right:55px !important; }
+.eg-eye { position:absolute !important; right:8px !important; top:50% !important; transform:translateY(-50%) !important; border:0 !important; background:transparent !important; font-size:20px !important; cursor:pointer !important; padding:8px !important; }
+.eg-login-button { display:block !important; width:100% !important; box-sizing:border-box !important; margin-top:24px !important; padding:15px 20px !important; border:0 !important; border-radius:11px !important; background:linear-gradient(135deg,#347fbd,#245f98) !important; color:white !important; font-size:16px !important; font-weight:800 !important; cursor:pointer !important; box-shadow:0 8px 20px rgba(36,95,152,.25) !important; }
+.eg-login-error { margin-top:12px !important; padding:11px 13px !important; border-radius:9px !important; background:#fff0f0 !important; color:#a52d2d !important; font-size:14px !important; }
+.eg-login-error[hidden] { display:none !important; }
+.eg-login-security { margin-top:22px !important; padding:15px !important; border-radius:12px !important; border:1px solid #d4e5f3 !important; background:#edf6fd !important; color:#61717f !important; font-size:13px !important; line-height:1.5 !important; }
+.eg-login-security strong { display:block !important; color:#2f79bb !important; margin-bottom:3px !important; }
+.eg-login-security span { display:block !important; }
+.eg-login-footer { position:absolute !important; left:0 !important; right:0 !important; bottom:0 !important; min-height:65px !important; box-sizing:border-box !important; padding:10px 30px !important; display:grid !important; grid-template-columns:1fr 1.5fr 1fr !important; align-items:center !important; gap:20px !important; background:#173f61 !important; color:white !important; font-size:13px !important; }
+.eg-login-footer strong { display:block !important; font-size:17px !important; }
+.eg-login-footer small { display:block !important; opacity:.8 !important; }
+.eg-login-footer > div:nth-child(2) { text-align:center !important; }
+.eg-login-footer > div:last-child { text-align:right !important; font-weight:700 !important; }
+@media (max-width:700px) {
+  .eg-login-page { align-items:flex-start !important; padding:18px 12px 120px !important; }
+  .eg-login-card { width:100% !important; max-width:480px !important; padding:24px 18px !important; border-radius:19px !important; }
+  .eg-login-brand img { width:75px !important; max-width:75px !important; }
+  .eg-login-brand h1 { font-size:29px !important; }
+  .eg-login-card h2 { font-size:22px !important; }
+  .eg-login-footer { grid-template-columns:1fr !important; gap:3px !important; padding:9px 15px !important; text-align:center !important; }
+  .eg-login-footer > div, .eg-login-footer > div:nth-child(2), .eg-login-footer > div:last-child { text-align:center !important; }
+}
+
+/* v2.6 - botão secundário de ativação do Portal do Cliente */
+.eg-login-button.eg-login-secondary{
+  margin-top:10px !important;
+  background:#ffffff !important;
+  color:#245f98 !important;
+  border:1px solid #9fc2df !important;
+  box-shadow:none !important;
+}
+.eg-login-button.eg-login-secondary:hover{background:#eef6fd !important;}

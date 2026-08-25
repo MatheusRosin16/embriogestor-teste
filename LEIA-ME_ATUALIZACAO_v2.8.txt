@@ -1,0 +1,16 @@
+EmbrioGestor v2.8 — Ajustes de produção, organização e estoque
+
+ALTERAÇÕES PRINCIPAIS
+1. Dashboard: OPU/Produção passa a contar um serviço por CLIENTE + DATA. Várias doadoras do mesmo cliente na mesma data contam como 1 OPU.
+2. Gráfico Produções por mês: também usa CLIENTE + DATA como unidade, não quantidade de animais.
+3. Últimas produções: agrupadas por serviço (cliente + data).
+4. Doadoras, Estoque de Sêmen, Estoque de Embriões, Produção e Transferência: clientes aparecem recolhidos/minimizados por padrão. Clique no nome do cliente para abrir.
+5. Sêmen usado na produção: ao registrar as doses no bloco “Sêmen utilizado no serviço”, o sistema vincula a um lote do estoque, cria automaticamente uma movimentação de Uso e reduz o saldo.
+6. Movimentações: histórico automático mostra a origem “Produção automática”. Movimentações automáticas devem ser editadas pelo serviço de produção.
+7. Sair: corrigido para aparecer somente uma vez.
+8. Nome do administrador: exibição com inicial maiúscula (ex.: Matheus).
+
+IMPORTANTE
+- Continue mantendo seu config.js atual no GitHub para preservar o Client ID do Google Drive.
+- Faça backup antes de publicar uma nova versão.
+- A reconciliação automática de sêmen tenta vincular serviços antigos a lotes existentes. Quando houver ambiguidade de lote, o sistema não cria desconto automático até que o serviço seja editado e um lote seja selecionado.

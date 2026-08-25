@@ -1,0 +1,14 @@
+EmbrioGestor v2.7 — ADMINISTRADOR
+
+ALTERAÇÕES PRINCIPAIS
+- Portal inicial de login mantido.
+- Acesso exclusivo para Administrador.
+- Removidos Usuários e Permissões / Portal do Cliente / acessos de Consulta da interface.
+- Mantida toda a base atual, Google Drive, backups e importadores de Excel.
+- Dashboard ganhou Produções por mês (gráfico anual) e Últimas produções (5 lançamentos recentes).
+
+ATUALIZAÇÃO NO GITHUB
+Substitua: index.html, app.js, login.js, login.css, style.css, cloud.js, mobile.js, catalogos.js, importador.js, sw.js, manifest.webmanifest e icons se desejar.
+NÃO substitua seu config.js atual.
+
+Antes de atualizar, faça um backup no Google Drive.

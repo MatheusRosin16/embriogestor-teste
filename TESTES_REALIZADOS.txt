@@ -1,0 +1,7 @@
+TESTES_OK 106 4
+
+Validações estáticas adicionais: OK
+- transferência sem partida
+- OPU com G4/G5
+- relatório de congelamento sem VT fixo
+- estoque limitado a BOTIJAO/CANECA

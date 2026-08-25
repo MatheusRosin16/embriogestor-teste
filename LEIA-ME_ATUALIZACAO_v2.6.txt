@@ -1,0 +1,42 @@
+EMBRIOGESTOR v2.6 — PORTAL DO CLIENTE + IMPORTAÇÃO DE REGISTROS DE DOADORAS
+
+PRINCIPAIS CORREÇÕES
+
+1. O link público do EmbrioGestor NÃO oferece mais criação de Administrador.
+   - A criação inicial de Administrador só aparece com ?setup=admin.
+   - No uso normal, o visitante vê somente a tela de login.
+
+2. Portal do Cliente isolado.
+   - O Administrador cria usuário/senha em Clientes > Acesso do cliente.
+   - Depois usa "Gerar pacote" para criar um arquivo de acesso individual.
+   - O pacote contém somente os dados daquele cliente e o login de Consulta.
+   - O cliente abre o link, toca em "ATIVAR ACESSO DO CLIENTE", escolhe o arquivo recebido e entra com usuário/senha.
+   - O cliente não recebe os demais clientes, usuários administrativos, Google Drive ou menus internos.
+   - O perfil Consulta continua sem permissão para criar, editar ou excluir.
+
+IMPORTANTE SOBRE A ARQUITETURA ATUAL
+
+O EmbrioGestor ainda é um PWA estático e os dados ficam no navegador. Por isso, sem um banco online central, o usuário/senha sozinho não consegue transportar os dados para um aparelho novo. O pacote individual é a forma segura de ativar o Portal do Cliente sem entregar a base completa do laboratório.
+
+3. Importador de Registros doadoras.xlsx.
+   - Reconhece planilhas com cabeçalhos DOADORAS, TATUAGEM, REGISTROS, RAÇA e CATEGORIA.
+   - Cada aba é tratada como cliente/propriedade.
+   - Tenta localizar clientes já existentes antes de criar outro cadastro.
+   - Atualiza doadoras já existentes pelo Cliente + Identificação.
+   - Registro é importado para o campo Registro.
+   - Raça é normalizada para o cadastro de raças.
+   - Tatuagem é preservada em Observações.
+   - Categorias históricas como PO/PS/CCG são preservadas em Observações, pois não correspondem à categoria reprodutiva atual (Vaca/Bezerra/Novilha/Primípara).
+   - A importação é por mesclagem e não apaga a base atual.
+
+MODELOS EXCEL SUPORTADOS
+- Estoque de sêmen Laboratório.xlsx
+- _Relatório Sêminna 2026 PIVE.xlsx
+- Controle estoque embrião botijão ABS.xlsx
+- Registros doadoras.xlsx
+
+ATUALIZAÇÃO NO GITHUB
+Substitua os arquivos do pacote, MAS mantenha o seu config.js atual, pois ele contém o Client ID do Google Drive.
+
+BACKUP
+Antes de atualizar, envie os dados principais ao Google Drive e salve um backup.

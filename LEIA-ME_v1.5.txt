@@ -1,0 +1,22 @@
+EMBRIOGESTOR v1.5
+
+COMO ABRIR
+1. Extraia todo o ZIP para uma pasta.
+2. Abra index.html com Google Chrome ou Microsoft Edge.
+3. Os dados continuam salvos no navegador (localStorage).
+
+ANTES DE ATUALIZAR
+- Na versão anterior, clique em Exportar backup e guarde o arquivo JSON.
+- A v1.5 lê automaticamente os bancos das versões anteriores e migra os dados para embriogestor_v7.
+
+NOVIDADES
+- Relatórios com raça da doadora e raça do touro.
+- Relatórios por Dia, Mês e Ano, sempre divididos internamente por data.
+- Dashboard por Dia, Mês e Ano.
+- Estoque de sêmen agrupado por cliente.
+- Novo Estoque de Embriões DT/VT por cliente, com Botijão, Caneca, Raque e Posição.
+- Posição de estoques por cliente disponível na área de Relatórios.
+
+PDF
+- Nos relatórios, clique em Exportar em PDF.
+- Na janela de impressão do navegador, escolha Salvar como PDF.

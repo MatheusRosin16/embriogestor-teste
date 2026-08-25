@@ -1,0 +1,41 @@
+EMBRIOGESTOR v1.3 — ALTERAÇÕES
+
+1. NOVA PRODUÇÃO DE EMBRIÕES
+- Ao selecionar o Cliente, o campo Doadora passa a listar somente as doadoras vinculadas ao cliente selecionado.
+- O mesmo filtro Cliente -> Doadora foi aplicado também à OPU e à Transferência, para manter consistência.
+- Removidos os campos "Embriões transferidos - DT" e "Embriões transferidos - VT".
+- Adicionado "Embriões transferidos a fresco" antes de "Embriões congelados".
+- Mantidos "Embriões congelados" e "Tipo dos embriões congelados".
+- Validação: transferidos a fresco + congelados não podem superar embriões viáveis D7.
+- Dados antigos DT/VT são migrados para o novo campo de transferidos a fresco, sem descarte dos números antigos.
+
+2. DOADORAS
+- Adicionado o campo "Registro" no cadastro Nova doadora / Editar doadora.
+- Registro aparece na tabela e é preservado no banco e backup.
+
+3. EDIÇÃO E EXCLUSÃO
+Foram adicionadas ações Editar e Excluir para:
+- Clientes
+- Doadoras
+- Touros
+- Raças
+- Profissionais
+- Estoque de sêmen
+- Movimentações do estoque
+- OPU / Aspirações
+- Produções de embriões
+- Transferências de embriões
+
+4. ESTOQUE
+- Edição de lote preserva e recalcula as movimentações.
+- Não permite reduzir a quantidade inicial se isso causar saldo negativo.
+- Exclusão de lote também remove suas movimentações, após confirmação.
+- Edição/exclusão de movimentações recalcula automaticamente o saldo.
+
+5. TRANSFERÊNCIAS
+- Continua sem campo de partida/lote.
+- Agora é possível editar todos os dados da transferência, além de atualizar o diagnóstico isoladamente.
+
+6. BANCO
+- Versão interna atualizada para embriogestor_v5.
+- Migração automática das versões v1, v2, v3 e v4.

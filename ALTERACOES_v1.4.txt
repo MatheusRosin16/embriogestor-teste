@@ -1,0 +1,11 @@
+EmbrioGestor v1.4 - Alterações
+
+- Relatórios agora exigem CLIENTE + DATA e trazem somente registros do dia escolhido.
+- Produções e transferências organizadas visualmente em blocos por data.
+- Relatório de produção redesenhado no estilo do modelo fornecido: cabeçalho, tabela, totais e observações.
+- Relatório de transferência redesenhado no estilo da planilha modelo fornecida: cabeçalho, tabela e resumo de prenhez.
+- Botão "Exportar em PDF" abre a impressão formatada A4 em modo paisagem; no navegador escolha "Salvar como PDF".
+- Produção voltou a ter campos separados: Embriões transferidos a fresco, DT e VT.
+- Permanecem Embriões congelados e Tipo dos embriões congelados.
+- Destino da transferência limitado a: TRANSFERENCIA A FRESCO / TRANSFERENCIA DT / TRANSFERENCIA VT / DESCARTADO.
+- Banco atualizado para embriogestor_v6 com migração de versões anteriores.

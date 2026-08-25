@@ -1,0 +1,51 @@
+EMBRIOGESTOR v2.2.1 — PACOTE CORRIGIDO PARA GITHUB
+====================================================
+
+IMPORTANTE — NÃO PERDER O GOOGLE DRIVE
+--------------------------------------
+Este ZIP NÃO contém o seu config.js real, porque esse arquivo no seu GitHub já possui o GOOGLE_CLIENT_ID configurado.
+
+Ao atualizar o GitHub:
+1. NÃO apague o arquivo config.js que já existe no repositório.
+2. Envie/substitua todos os demais arquivos deste pacote.
+3. O arquivo config.exemplo.js é apenas referência. NÃO renomeie nem substitua seu config.js por ele.
+
+DADOS
+-----
+Os dados do aplicativo ficam no navegador e no arquivo principal do Google Drive.
+O código desta atualização não apaga nem reinicializa o banco.
+
+Também foi incluída uma cópia de segurança em:
+backup-seguranca/EmbrioGestor_Backup_2026-08-24.json
+
+CORREÇÕES PRINCIPAIS
+--------------------
+- Corrigido o menu Sair: agora é tratado como ação antes da navegação.
+- Removido o case de logout do render, evitando deixar o aplicativo em página inválida.
+- Tela de login refeita como overlay isolado do layout principal.
+- Login não substitui mais o <body> do EmbrioGestor.
+- CSS do login separado e com prioridade própria.
+- Google Drive / importação de backup mantidos e corrigidos.
+- Service Worker atualizado para limpar cache antigo (v2.2.1).
+- Arquivos JS/CSS carregados com versão v31 para evitar cache quebrado.
+
+PRIMEIRO ACESSO AO LOGIN
+------------------------
+Se ainda não existir usuário local neste aparelho, a tela solicitará a criação do primeiro Administrador.
+Esse cadastro de login é LOCAL ao aparelho nesta versão.
+Os clientes, doadoras, produções, estoques e transferências continuam sendo sincronizados pelo Google Drive.
+
+ATUALIZAÇÃO NO GITHUB
+---------------------
+1. Abra o repositório embriogestor.
+2. Faça Upload files.
+3. Envie os arquivos/pastas deste pacote, EXCETO config.exemplo.js e backup-seguranca se não quiser deixá-los públicos.
+4. Confirme a substituição dos arquivos de mesmo nome.
+5. Faça Commit changes.
+6. Aguarde o GitHub Pages atualizar.
+7. Abra: https://matheusrosin16.github.io/embriogestor/?v=31
+8. Se necessário, feche e abra novamente o app instalado para receber o novo Service Worker.
+
+SEGURANÇA
+---------
+Não publique Client Secret do Google. O Client ID pode permanecer no config.js já configurado.

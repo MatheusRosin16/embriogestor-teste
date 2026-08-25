@@ -1,0 +1,10 @@
+VERIFICAÇÕES v1.9
+
+- Sintaxe completa do app.js verificada com Node.js (node --check): OK.
+- Estrutura do banco v9 conferida: OK.
+- Presença do novo menu Carteiras por Profissional: OK.
+- Cálculo de OPU por chave cliente+data: OK.
+- Registro de doses por serviço: OK.
+- Relatório com quadro de touro/partida/doses/% produção: OK.
+- Funções de abreviação de raça aplicadas aos módulos solicitados: OK.
+- Integridade do ZIP conferida após compactação.

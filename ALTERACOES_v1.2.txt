@@ -1,0 +1,31 @@
+EmbrioGestor v1.2
+
+Banco e catálogos
+- DB_KEY atualizado para embriogestor_v4.
+- Normalização/migração de bancos v1/v2/v3.
+- Raças unificadas no db.racas, com catálogo inicial e cadastros personalizados persistentes.
+- Geração de ID baseada no maior sufixo existente.
+
+Cadastros
+- Doadora alinhada à estrutura definitiva.
+- Touro sem status/data de morte.
+- Profissões via catálogo inicial.
+
+Estoque e movimentações
+- Recipiente limitado a BOTIJAO ou CANECA.
+- Central do estoque herdada do cadastro do touro.
+- Movimentação vinculada ao estoqueId.
+- Lotes filtrados pelo cliente no formulário de movimentação.
+- Saldo/usadas são recalculados a partir das movimentações.
+- Bloqueio de uso/ajuste negativo acima do saldo.
+- Bloqueio de devolução acima da quantidade usada.
+
+OPU e produção
+- G4 e G5 visíveis na tabela.
+- Validações de quantidades e consistência.
+- Tipo de congelamento informado no cadastro quando houver congelados.
+
+Transferência e relatórios
+- Transferência sem partida.
+- Relatório de congelamento não fixa VT.
+- Relatórios seguem seleção individual por cliente.

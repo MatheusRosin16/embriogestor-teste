@@ -1,0 +1,12 @@
+EMBRIOGESTOR v1.5
+
+- Relatórios de produção, congelamento e transferência agora mostram raça da doadora e raça do touro.
+- Novo módulo Estoque de Embriões, separado por cliente, para DT/VT com quantidade e localização: botijão, caneca, raque e posição.
+- Estoque de embriões permite cadastrar, editar e excluir.
+- Relatórios por cliente agora podem ser gerados por Dia, Mês ou Ano.
+- Relatórios mensais e anuais ficam divididos internamente por data do procedimento.
+- Dashboard ganhou filtro por Dia, Mês ou Ano.
+- Dashboard mostra OPU, oócitos, embriões D7, Fresco, DT, VT, congelados e transferências do período.
+- Dashboard também mostra posição atual dos estoques de sêmen e embriões.
+- Relatório/posição de estoques por cliente incluído.
+- Banco atualizado para embriogestor_v7, preservando migração das versões anteriores.

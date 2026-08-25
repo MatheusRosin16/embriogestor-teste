@@ -1,0 +1,32 @@
+EMBRIOGESTOR v1.9 — ALTERAÇÕES
+
+1. DASHBOARD / OPU
+- O total de OPUs agora é calculado por serviço: 1 cliente + 1 data de produção = 1 OPU.
+- Várias doadoras do mesmo cliente na mesma data contam como uma única OPU.
+
+2. ABREVIATURAS DE RAÇA
+- Estoque de sêmen, estoque de embriões, produção e relatórios passam a exibir abreviaturas de raça.
+- Incluído mapa de abreviações das raças principais e regra automática para raças personalizadas.
+
+3. DOSES DE SÊMEN POR SERVIÇO
+- Removido o campo de dose utilizada de cada doadora/linha de produção.
+- Criado registro de doses por serviço (cliente + data + touro + partida).
+- Na Produção, cada bloco cliente/data tem a área “Sêmen utilizado no serviço”.
+- Permite cadastrar, editar e excluir touro, partida e quantidade total de doses usadas no serviço.
+
+4. CARTEIRAS POR PROFISSIONAL
+- Novo menu “Carteiras por Profissional”.
+- Cliente agora pode ser vinculado a um Profissional responsável.
+- É possível selecionar uma carteira e visualizar somente seus clientes nos cadastros que dependem de cliente.
+- Incluídos atalhos para cadastrar cliente, doadora, touro, raça, profissional e estoque de sêmen.
+
+5. RELATÓRIO DE PRODUÇÃO
+- Abaixo das observações de cada serviço/data foi incluído quadro com:
+  TOURO | PARTIDA | DOSES | RAÇA | PRODUÇÃO % (EMBRIÕES/OÓCITOS VIÁVEIS)
+- A porcentagem é calculada por touro dentro do serviço (cliente + data).
+- Raças são exibidas por abreviatura.
+
+6. BANCO
+- Banco atualizado para embriogestor_v9.
+- Migração automática a partir do embriogestor_v8 e versões anteriores.
+- Criada coleção servicosSemen.

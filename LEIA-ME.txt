@@ -1,0 +1,32 @@
+EMBRIOGESTOR v1.2 — versão corrigida
+
+COMO ABRIR
+1. Extraia todo o arquivo ZIP para uma pasta.
+2. Abra o arquivo index.html com Google Chrome ou Microsoft Edge.
+3. Os dados ficam salvos no navegador (localStorage).
+4. Use "Exportar backup" regularmente antes de trocar de computador/navegador.
+
+PRINCIPAIS CORREÇÕES DESTA VERSÃO
+- Catálogos carregados por catalogos.js: raças, centrais, profissões, categorias, graus D7, estágios D7, destinos e diagnósticos.
+- Raças passam a ser gravadas em db.racas/localStorage e aparecem nos formulários de doadoras e touros.
+- Migração segura de bancos antigos para embriogestor_v4, preservando dados e reconstruindo estoque quando necessário.
+- IDs passam a usar o maior número já existente, evitando duplicidade após exclusões.
+- Doadoras: identificação/brinco, cliente, raça, categoria, status, nascimento e observações.
+- Touros: nome, registro, raça, central, código e observações; sem status e sem data de morte.
+- Profissionais: nome, profissão, funcional, telefone, e-mail, entrada, saída e status.
+- Estoque: cliente, touro, central, partida/lote, quantidade, usadas, saldo, BOTIJAO/CANECA e observações.
+- Movimentações vinculadas ao lote e saldo recalculado automaticamente.
+- Transferências sem campo partida/lote.
+- Relatórios de produção, congelamento e transferência sempre selecionados individualmente por cliente.
+- Relatório de congelamento usa o tipo informado no cadastro da produção, sem VT fixo.
+- OPU exibe G1, G2, G3, G4 e G5.
+- Validações para impedir quantidades negativas, fracionadas ou relações impossíveis entre totais.
+
+OBSERVAÇÃO
+Esta versão funciona localmente no navegador. O backup JSON continua sendo recomendado antes de qualquer atualização futura.
+
+ATUALIZAÇÃO v1.8
+- Faça backup antes de substituir a versão anterior.
+- A versão v1.8 migra automaticamente dados da v1.7.
+- Cada produção passa a equivaler a uma OPU no Dashboard.
+- Produções a fresco geram transferências automáticas editáveis.

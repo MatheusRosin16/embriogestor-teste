@@ -1,0 +1,22 @@
+EMBRIOGESTOR MOBILE/PWA v2.1 - NUVEM & BACKUP
+==============================================
+
+- Novo menu: Nuvem & Backup.
+- Integração preparada com Google Identity Services e Google Drive API.
+- Conexão OAuth 2.0 pelo navegador, sem armazenar senha Google.
+- Backup manual em JSON dentro de uma pasta EmbrioGestor no Google Drive.
+- Listagem dos backups criados pelo aplicativo.
+- Restauração de backup selecionado.
+- Arquivo principal EmbrioGestor_Dados_Principais.json para levar o estado do sistema
+  entre computador e celular.
+- Opção de backup automático após alterações, enquanto o Drive estiver conectado.
+- Dados locais continuam funcionando mesmo sem internet ou sem Drive configurado.
+- PWA atualizado para armazenar também config.js e cloud.js no cache offline.
+- Interface do módulo de nuvem adaptada para celular.
+- Estrutura de nuvem separada do app.js para facilitar a futura conexão de banco online.
+
+SEGURANÇA
+---------
+- O sistema usa somente Client ID no navegador.
+- Nunca deve ser inserido Client Secret no código do aplicativo.
+- O escopo utilizado é drive.file, limitado aos arquivos criados/abertos pelo aplicativo.

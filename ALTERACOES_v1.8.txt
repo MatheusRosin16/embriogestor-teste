@@ -1,0 +1,15 @@
+EmbrioGestor v1.8
+
+- Dashboard: cada produção de embriões equivale a 1 OPU.
+- Dashboard: Oócitos coletados = soma dos oócitos viáveis do período.
+- Dashboard: novo indicador Oócitos coletados totais = soma dos oócitos totais do período.
+- Doadoras agora são exibidas agrupadas por cliente.
+- Produções agora são agrupadas primeiro por cliente e depois por data.
+- Transferências agora são agrupadas primeiro por cliente e depois por data.
+- Produção: novo campo Quantidade de dose utilizada, aceitando 0,1; 0,2; 0,3 etc.
+- Produção com embriões a fresco gera automaticamente uma linha de transferência para cada embrião fresco.
+- Transferências automáticas são editáveis e recebem campos para receptora, grau D7, estágio D7, ovário (OD/OE), grau do corpo lúteo (1/2/3) e CL cavitário (Sim/Não).
+- Relatório de transferência passa a exibir ovário, grau CL e cavitário.
+- Relatório de produção passa a exibir a quantidade de dose utilizada.
+- Pesquisa de cliente em Relatórios foi corrigida; agora funciona com o campo atual e mostra todos os clientes quando a busca está vazia.
+- Migração do banco atualizada para embriogestor_v8, preservando novos campos.

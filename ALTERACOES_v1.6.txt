@@ -1,0 +1,28 @@
+EMBRIOGESTOR v1.6 - ALTERAÇÕES
+
+1. O período selecionado no Dashboard virou filtro global do sistema.
+   - Aspirações, Produções, Transferências e Movimentações exibem somente o período selecionado.
+   - Relatórios abrem com o mesmo período do Dashboard por padrão.
+   - Filtro aceita Dia, Mês ou Ano e fica salvo no navegador.
+
+2. Estoque de sêmen
+   - Tipo de recipiente fixado em CANECA.
+   - Cadastro solicita apenas a identificação da caneca.
+   - Dados antigos são apresentados como CANECA nesta versão.
+
+3. Produção / estoque automático de embriões
+   - Produção agora registra Embriões congelados DT e Embriões congelados VT separadamente.
+   - Total congelado = DT + VT, calculado automaticamente.
+   - Ao salvar uma produção, o estoque de embriões é criado/atualizado automaticamente por DT e VT.
+   - Ao editar a produção, as quantidades do estoque automático são sincronizadas.
+   - Ao excluir a produção, os itens automáticos de estoque vinculados são removidos.
+   - Botijão, caneca, raque e posição continuam editáveis no Estoque de Embriões.
+
+4. Relatórios
+   - Corrigida a exportação: usa a impressão da própria página, evitando bloqueio de pop-up.
+   - No diálogo de impressão selecione "Salvar como PDF".
+   - Logo Sêminna adicionada ao cabeçalho.
+   - Rodapé padrão em todos os relatórios:
+     SÊMINNA - LABORATÓRIO DE REPRODUÇÃO ANIMAL
+     AV. General Osório, 797, sala 01, Francisco Beltrão - PR
+   - Relatórios continuam por cliente e por Dia/Mês/Ano, com divisão interna por data.

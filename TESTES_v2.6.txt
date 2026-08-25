@@ -1,0 +1,10 @@
+TESTES EMBRIOGESTOR v2.6
+
+- app.js: verificação de sintaxe com node --check: OK
+- login.js: verificação de sintaxe com node --check: OK
+- importador.js: verificação de sintaxe com node --check: OK
+- cloud.js: verificação de sintaxe com node --check: OK
+- mobile.js: verificação de sintaxe com node --check: OK
+- Registros doadoras.xlsx analisado: 17 abas e aproximadamente 201 linhas de doadoras preenchidas.
+- Estruturas de cabeçalho observadas: DOADORAS, TATUAGEM, REGISTROS, RAÇA, CATEGORIA, com variações entre abas.
+- Importação configurada para mesclar e deduplicar por Cliente + Identificação da doadora.

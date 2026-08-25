@@ -1,0 +1,36 @@
+EMBRIOGESTOR MOBILE / PWA
+
+Esta versão foi criada a partir do EmbrioGestor v1.9 enviado pelo usuário.
+
+O que mudou:
+- Interface responsiva para celular e tablet.
+- Menu lateral móvel com botão ☰.
+- Formulários em uma coluna no celular.
+- Botões e campos maiores para toque.
+- Tabelas com rolagem horizontal.
+- Manifesto PWA e ícones para instalação.
+- Service Worker para cache/offline quando hospedado em HTTPS.
+
+IMPORTANTE SOBRE OS DADOS
+A v1.9 salva os dados no localStorage do navegador. Esta versão mantém essa arquitetura para preservar compatibilidade.
+Assim, dados salvos no computador NÃO aparecem automaticamente no celular e vice-versa.
+Para sincronização real entre celular e computador será necessária uma próxima etapa com banco de dados online e login.
+
+COMO TESTAR NO COMPUTADOR
+Abra index.html normalmente.
+
+COMO USAR COMO APLICATIVO NO CELULAR
+Para o botão "Instalar aplicativo" funcionar de forma confiável, publique esta pasta em um servidor HTTPS.
+Depois abra o endereço no Chrome/Edge (Android) ou Safari (iPhone) e use a opção de adicionar à tela inicial.
+
+Arquivos PWA adicionados:
+- manifest.webmanifest
+- sw.js
+- mobile.js
+- icons/icon-192.png
+- icons/icon-512.png
+
+ATUALIZAÇÃO v2.1 - GOOGLE DRIVE
+------------------------------
+A versão v2.1 inclui o menu Nuvem & Backup. Leia CONFIGURAR_GOOGLE_DRIVE.txt para
+ativar conexão, backups e sincronização do arquivo principal entre dispositivos.

@@ -1,0 +1,59 @@
+EMBRIOGESTOR v2.1 - COMO ATIVAR O GOOGLE DRIVE
+================================================
+
+Esta versão já contém o módulo Nuvem & Backup. Os dados continuam sendo
+salvos imediatamente no aparelho. O Google Drive é uma cópia externa e pode
+também armazenar o arquivo principal para trocar dados entre computador e celular.
+
+IMPORTANTE
+---------
+O login Google não funciona corretamente abrindo o sistema diretamente por file://.
+Para usar Drive/PWA, publique o sistema em um endereço HTTPS.
+
+1) CRIAR UM PROJETO NO GOOGLE CLOUD
+-----------------------------------
+- Entre no Google Cloud Console com a conta Google que será usada.
+- Crie um projeto, por exemplo: EmbrioGestor.
+- Ative a Google Drive API.
+
+2) CONFIGURAR A TELA DE CONSENTIMENTO OAUTH
+-------------------------------------------
+- Configure a tela de consentimento OAuth.
+- Informe o nome EmbrioGestor.
+- Para testes, adicione as contas Google autorizadas como usuários de teste.
+
+3) CRIAR O CLIENT ID
+--------------------
+- Crie uma credencial OAuth 2.0 do tipo Aplicativo da Web.
+- Em Origens JavaScript autorizadas, adicione o endereço HTTPS onde o EmbrioGestor será publicado.
+  Exemplo: https://seu-dominio.com
+- Copie o Client ID gerado. Ele termina normalmente em .apps.googleusercontent.com
+
+4) CONFIGURAR O EMBRIOGESTOR
+----------------------------
+Abra o arquivo config.js e preencha:
+
+GOOGLE_CLIENT_ID: "SEU_CLIENT_ID.apps.googleusercontent.com"
+
+Não coloque Client Secret no sistema. O navegador nunca deve receber o Client Secret.
+
+5) USAR
+-------
+- Abra EmbrioGestor > Nuvem & Backup.
+- Clique em Conectar Google Drive.
+- Autorize a conta.
+- Use Salvar backup agora para criar uma cópia datada.
+- Use Enviar dados deste aparelho para atualizar o arquivo principal.
+- No outro dispositivo, conecte a mesma conta e use Carregar dados do Drive.
+
+BACKUP AUTOMÁTICO
+-----------------
+Quando ativado, cada alteração continua sendo salva localmente na hora. Se a conta
+Google estiver conectada, o sistema agenda uma cópia no Drive alguns segundos depois.
+
+LIMITAÇÃO DESTA ETAPA
+---------------------
+A sincronização atual é por arquivo principal. Não é edição simultânea em tempo real.
+Para trabalhar com vários usuários editando ao mesmo tempo, a próxima etapa é conectar
+um banco online com autenticação e controle de conflitos. A camada Nuvem & Backup foi
+separada justamente para permitir essa evolução sem refazer os cadastros.

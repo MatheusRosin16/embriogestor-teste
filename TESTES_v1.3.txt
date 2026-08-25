@@ -1,0 +1,10 @@
+TESTES REALIZADOS — v1.3
+
+- JavaScript validado com node --check: OK.
+- Inicialização do aplicativo com DOM/localStorage simulados: OK.
+- Migração de produção antiga DT/VT para transferidosFresco: OK.
+- Preservação do campo Registro da doadora em banco normalizado: OK.
+- Geração de ID após lacunas/exclusões: OK.
+- Remoção de partida em transferências antigas: OK.
+- Existência das ações de exclusão nos principais módulos CRUD: OK.
+- Campos antigos visíveis "Embriões transferidos - DT/VT" removidos: OK.

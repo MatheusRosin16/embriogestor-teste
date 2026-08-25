@@ -1,0 +1,15 @@
+TESTES REALIZADOS — EmbrioGestor v1.8
+
+1. Verificação de sintaxe completa do app.js com Node.js: OK.
+2. Inicialização do sistema em navegador headless: OK, sem erros de JavaScript.
+3. Migração de embriogestor_v7 para embriogestor_v8: OK.
+4. Dashboard exibe OPUs/Produções, oócitos viáveis e oócitos totais: OK.
+5. Doadoras agrupadas por cliente: OK.
+6. Produções agrupadas por cliente e data: OK.
+7. Transferências agrupadas por cliente e data: OK.
+8. Produção com 2 embriões a fresco gera 2 transferências automáticas editáveis: OK.
+9. Campos de transferência: receptora, grau D7, estágio D7, ovário, grau CL e cavitário: OK.
+10. Produção com DT/VT gera estoque automático correspondente: OK.
+11. Campo de dose aceita 0,2 e é salvo como 0.2: OK.
+12. Busca de cliente em Relatórios: OK.
+13. Geração do relatório de Produção com cliente, período e dose utilizada: OK.

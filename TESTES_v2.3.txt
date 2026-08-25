@@ -1,0 +1,12 @@
+EmbrioGestor v2.3 — verificações realizadas
+
+- app.js: sintaxe validada com node --check.
+- login.js: sintaxe validada com node --check.
+- cloud.js: sintaxe validada com node --check.
+- Banco normalizado passa a incluir db.usuarios.
+- Migração preserva usuários antigos do localStorage.
+- Perfis previstos: Administrador, Veterinário, Laboratório e Consulta.
+- Clientes de não-administradores são filtrados pelo profissionalId do usuário conectado.
+- Consulta possui bloqueio de funções de criação/edição/exclusão.
+- Usuários e perfis fazem parte do db e portanto do pacote de backup Google Drive.
+- config.js pessoal não está incluído no pacote, evitando sobrescrever o Client ID do Google.

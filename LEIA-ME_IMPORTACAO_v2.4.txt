@@ -1,0 +1,38 @@
+EMBRIOGESTOR v2.4 — IMPORTAÇÃO DE DADOS ANTIGOS
+
+Esta versão mantém a base atual, os usuários/perfis e a sincronização pelo Google Drive.
+
+NOVO MENU (Administrador):
+Importar Dados Antigos
+
+MODELOS EXCEL RECONHECIDOS:
+1. Estoque de sêmen Laboratório.xlsx
+   - usa cada aba como cliente/fazenda;
+   - importa touro, registro, raça, doses e observação;
+   - aceita doses fracionadas (2,5; 1,5 etc.);
+   - recipiente padronizado como CANECA.
+
+2. _Relatório Sêminna 2026 PIVE.xlsx
+   - reconhece Cliente e Data no cabeçalho;
+   - importa doadora, raça, touro, oócitos, viáveis, clivagem, embriões D7, TE e DT;
+   - TE antigo entra como transferência a fresco;
+   - DT antigo entra como embrião congelado DT;
+   - lê a tabela de touro/partida/doses do serviço;
+   - células DOSES que o Excel transformou em 01/02 são interpretadas como 1/2 = 0,5 dose;
+   - inconsistências históricas são preservadas, mas marcadas para REVISÃO.
+
+3. Controle estoque embrião botijão ABS.xlsx
+   - reconhece DT/VT;
+   - identifica cliente/fazenda, data, botijão ABS e número da caneca;
+   - cada linha válida representa 1 embrião;
+   - dados incompletos de touro/doadora são aceitos como histórico;
+   - linhas claramente deslocadas/malformadas são sinalizadas e não são importadas automaticamente.
+
+SEGURANÇA:
+- A importação MESCLA com o banco; não apaga os registros existentes.
+- Cada linha importada recebe uma chave de origem para evitar duplicidade do mesmo arquivo/linha.
+- Faça um backup no Google Drive antes de uma importação grande.
+- O config.js do seu GitHub NÃO deve ser substituído.
+
+OBSERVAÇÃO:
+A leitura de .xlsx usa a biblioteca SheetJS carregada pela internet. Para importar Excel, o aparelho precisa estar online durante a leitura da planilha. O restante do EmbrioGestor continua funcionando normalmente.

@@ -1,0 +1,9 @@
+TESTES v2.4
+- app.js: sintaxe JavaScript validada com node --check.
+- login.js: sintaxe validada.
+- cloud.js: sintaxe validada.
+- importador.js: sintaxe validada.
+- Modelos Excel inspecionados: estoque de sêmen, relatório PIVE e estoque de embriões ABS.
+- Quantidades fracionadas de sêmen habilitadas no cadastro e movimentações.
+- Valores de doses convertidos pelo Excel para datas (ex.: 01/02) tratados como fração 1/2 = 0,5 quando o padrão é inequívoco.
+- Registros históricos inconsistentes recebem aviso de revisão em vez de serem silenciosamente corrigidos.
