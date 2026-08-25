@@ -2560,6 +2560,14 @@ function blocoPeriodoRelatorio(clienteId,tipo,titulo){
     <div id="rel_${tipo}_dia_wrap"><label>Data</label><input id="rel_${tipo}_dia" type="date" value="${h}"></div>
     <div id="rel_${tipo}_mes_wrap" style="display:none"><label>Mês</label><input id="rel_${tipo}_mes" type="month" value="${h.slice(0,7)}"></div>
     <div id="rel_${tipo}_ano_wrap" style="display:none"><label>Ano</label><input id="rel_${tipo}_ano" type="number" min="2000" max="2100" value="${h.slice(0,4)}"></div>
+    <label>Observação do relatório</label>
+
+<textarea
+  id="rel_${tipo}_obs"
+  rows="4"
+  placeholder="Digite uma observação para este relatório..."
+  style="width:100%; resize:vertical;"
+></textarea>
     <button class="btn" onclick="gerarRelatorioPeriodo('${clienteId}','${tipo}')">Gerar relatório</button></div>`;
 }
 
@@ -2571,10 +2579,17 @@ function atualizarPeriodoRel(tipo){
 function gerarRelatorioPeriodo(clienteId,tipo){
   const periodoTipo=document.getElementById(`rel_${tipo}_tipo`)?.value||"dia";
   const valor=document.getElementById(`rel_${tipo}_${periodoTipo}`)?.value||"";
+  const observacaoRelatorio =
+  document.getElementById(`rel_${tipo}_obs`)?.value.trim() || "";
   if(!valor){alert("Informe o período.");return;}
-  if(tipo==="producao")relatorioProducao(clienteId,valor,periodoTipo);
-  else if(tipo==="congelamento")relatorioCongelamento(clienteId,valor,periodoTipo);
-  else relatorioTransferencia(clienteId,valor,periodoTipo);
+  if(tipo==="producao")
+  relatorioProducao(clienteId,valor,periodoTipo,observacaoRelatorio);
+
+else if(tipo==="congelamento")
+  relatorioCongelamento(clienteId,valor,periodoTipo,observacaoRelatorio);
+
+else
+  relatorioTransferencia(clienteId,valor,periodoTipo,observacaoRelatorio);
 }
 
 function blocoEstoqueCliente(clienteId){
@@ -2590,33 +2605,45 @@ function grupoRelatorioPorData(dados,renderTabela){
   return Object.entries(grupos).map(([data,itens])=>`<div class="report-date-title">DATA: ${esc(dataBR(data))}</div>${renderTabela(itens,data)}`).join("");
 }
 
-function relatorioProducao(clienteId,valor,tipo="dia"){
+function relatorioProducao(clienteId,valor,tipo="dia",observacaoRelatorio=""){
   const cliente=db.clientes.find(x=>x.id===clienteId);if(!cliente)return;
   const dados=db.producoes.filter(x=>x.clienteId===clienteId&&dataNoPeriodo(x.data,tipo,valor));
   if(!dados.length){alert("Não há produção cadastrada para este cliente no período selecionado.");return;}
   const corpo=grupoRelatorioPorData(dados,(itens)=>{const t=totaisProducao(itens);const linhas=itens.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(doadoraNome(x.doadoraId))}</td><td>${esc(doadoraRaca(x.doadoraId))}</td><td>${esc(touroNome(x.touroId))}</td><td>${esc(touroRaca(x.touroId))}</td><td>${numeroNaoNegativo(x.oocitos)}</td><td>${numeroNaoNegativo(x.oocitosViaveis)}</td><td>${numeroNaoNegativo(x.clivados)}</td><td>${percentual(x.clivados,x.oocitosViaveis)}</td><td>${numeroNaoNegativo(x.embriõesD7)}</td><td>${percentual(x.embriõesD7,x.oocitosViaveis)}</td><td>${numeroNaoNegativo(x.transferidosFresco)}</td><td>${numeroNaoNegativo(x.transferidosDT)}</td><td>${numeroNaoNegativo(x.transferidosVT)}</td><td>${numeroNaoNegativo(x.congelados)}</td><td>${esc(x.tipoCongelamento||"")}</td></tr>`).join("");return `<table class="report-table"><thead><tr><th>Nº</th><th>DOADORA</th><th>RAÇA DOADORA</th><th>TOURO</th><th>RAÇA TOURO</th><th>OÓCITOS TOTAIS</th><th>OÓCITOS VIÁVEIS</th><th>CLIVAGEM</th><th>%CLIV</th><th>EMB. D7</th><th>%PROD</th><th>FRESCO</th><th>DT</th><th>VT</th><th>CONG.</th><th>TIPO</th></tr></thead><tbody>${linhas}<tr class="total-row"><td colspan="5">TOTAL DO DIA</td><td>${t.oocitos}</td><td>${t.oocitosViaveis}</td><td>${t.clivados}</td><td>${percentual(t.clivados,t.oocitosViaveis)}</td><td>${t.embriõesD7}</td><td>${percentual(t.embriõesD7,t.oocitosViaveis)}</td><td>${t.transferidosFresco}</td><td>${t.transferidosDT}</td><td>${t.transferidosVT}</td><td>${t.congelados}</td><td></td></tr></tbody></table><div class="report-note"><b>OBS:</b> ${esc(observacoesUnicas(itens)||"-")}</div>`;});
   const totalG=totaisProducao(dados);
-  const conteudo=`${cabecalhoRelatorioPeriodo("RELATÓRIO PRODUÇÃO IN VITRO DE EMBRIÕES",cliente,tipo,valor)}${corpo}<div class="report-grand-total"><b>TOTAL DO PERÍODO:</b> Oócitos ${totalG.oocitos} | Viáveis ${totalG.oocitosViaveis} | Clivados ${totalG.clivados} | Embriões D7 ${totalG.embriõesD7} | Fresco ${totalG.transferidosFresco} | DT ${totalG.transferidosDT} | VT ${totalG.transferidosVT} | Congelados ${totalG.congelados}</div><div class="report-footer">EmbrioGestor - Relatório por cliente e período, dividido por data</div>`;
+  const conteudo=`${cabecalhoRelatorioPeriodo("RELATÓRIO PRODUÇÃO IN VITRO DE EMBRIÕES",cliente,tipo,valor)}${corpo}<div class="report-grand-total"><b>TOTAL DO PERÍODO:</b> Oócitos ${totalG.oocitos} | Viáveis ${totalG.oocitosViaveis} | Clivados ${totalG.clivados} | Embriões D7 ${totalG.embriõesD7} | Fresco ${totalG.transferidosFresco} | DT ${totalG.transferidosDT} | VT ${totalG.transferidosVT} | Congelados ${totalG.congelados}</div><div ${observacaoRelatorio
+  ? `<div class="report-note"><b>OBSERVAÇÃO DO RELATÓRIO:</b> ${esc(observacaoRelatorio)}</div>`
+  : ""
+                                                                                                                                                                                                                                                                                                                                                                                                                                                         }
+  class="report-footer">EmbrioGestor - Relatório por cliente e período, dividido por data</div>`;
   abrirRelatorioFormatado("Relatório de Produção",cliente,valor,conteudo,"landscape");
 }
 
-function relatorioCongelamento(clienteId,valor,tipo="dia"){
+function relatorioCongelamento(clienteId,valor,tipo="dia",observacaoRelatorio=""){
   const cliente=db.clientes.find(x=>x.id===clienteId);if(!cliente)return;
   const dados=db.producoes.filter(x=>x.clienteId===clienteId&&numeroNaoNegativo(x.congelados)>0&&dataNoPeriodo(x.data,tipo,valor));
   if(!dados.length){alert("Não há congelamentos cadastrados para este cliente no período selecionado.");return;}
   const corpo=grupoRelatorioPorData(dados,(itens)=>{const total=itens.reduce((a,x)=>a+numeroNaoNegativo(x.congelados),0);const linhas=itens.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(doadoraNome(x.doadoraId))}</td><td>${esc(doadoraRaca(x.doadoraId))}</td><td>${esc(touroNome(x.touroId))}</td><td>${esc(touroRaca(x.touroId))}</td><td>${numeroNaoNegativo(x.embriõesD7)}</td><td>${numeroNaoNegativo(x.congelados)}</td><td>${esc(x.tipoCongelamento||"Não informado")}</td><td>${esc(x.obs||"")}</td></tr>`).join("");return `<table class="report-table"><thead><tr><th>Nº</th><th>DOADORA</th><th>RAÇA DOADORA</th><th>TOURO</th><th>RAÇA TOURO</th><th>EMB. D7</th><th>CONGELADOS</th><th>TIPO</th><th>OBS</th></tr></thead><tbody>${linhas}<tr class="total-row"><td colspan="6">TOTAL DO DIA</td><td>${total}</td><td colspan="2"></td></tr></tbody></table>`;});
   const total=dados.reduce((a,x)=>a+numeroNaoNegativo(x.congelados),0);
-  const conteudo=`${cabecalhoRelatorioPeriodo("RELATÓRIO DE CONGELAMENTO DE EMBRIÕES",cliente,tipo,valor)}${corpo}<div class="report-grand-total"><b>TOTAL CONGELADO NO PERÍODO:</b> ${total}</div><div class="report-footer">EmbrioGestor - Relatório por cliente e período, dividido por data</div>`;
+  const conteudo=`${cabecalhoRelatorioPeriodo("RELATÓRIO DE CONGELAMENTO DE EMBRIÕES",cliente,tipo,valor)}${corpo}<div class="report-grand-total"><b>TOTAL CONGELADO NO PERÍODO:</b> ${total}</div><div ${observacaoRelatorio
+  ? `<div class="report-note"><b>OBSERVAÇÃO DO RELATÓRIO:</b> ${esc(observacaoRelatorio)}</div>`
+  : ""
+} 
+  class="report-footer">EmbrioGestor - Relatório por cliente e período, dividido por data</div>`;
   abrirRelatorioFormatado("Relatório de Congelamento",cliente,valor,conteudo,"landscape");
 }
 
-function relatorioTransferencia(clienteId,valor,tipo="dia"){
+function relatorioTransferencia(clienteId,valor,tipo="dia",observacaoRelatorio=""){
   const cliente=db.clientes.find(x=>x.id===clienteId);if(!cliente)return;
   const dados=db.transferencias.filter(x=>x.clienteId===clienteId&&dataNoPeriodo(x.data,tipo,valor));
   if(!dados.length){alert("Não há transferências cadastradas para este cliente no período selecionado.");return;}
   const corpo=grupoRelatorioPorData(dados,(itens)=>{const prenhes=itens.filter(x=>x.diagnostico==="Prenhe").length,vazias=itens.filter(x=>x.diagnostico==="Vazia").length,pct=itens.length?Math.round(prenhes/itens.length*100):0;const linhas=itens.map((x,i)=>`<tr><td>${i+1}</td><td>${esc(doadoraNome(x.doadoraId))}</td><td>${esc(doadoraRaca(x.doadoraId))}</td><td>${esc(touroNome(x.touroId))}</td><td>${esc(touroRaca(x.touroId))}</td><td>${esc(x.embriãoGrau||"")}</td><td>${esc(x.embriãoEstagio||"")}</td><td>${esc(x.receptora||"")}</td><td>${esc(x.destino||"")}</td><td>${esc(x.diagnostico||"")}</td></tr>`).join("");return `<table class="report-table"><thead><tr><th>Nº</th><th>DOADORA</th><th>RAÇA DOADORA</th><th>TOURO</th><th>RAÇA TOURO</th><th>GRAU D7</th><th>ESTÁGIO D7</th><th>RECEPTORA</th><th>DESTINO</th><th>DIAGNÓSTICO</th></tr></thead><tbody>${linhas}</tbody></table><table class="report-table report-summary"><tbody><tr><th>TOTAL</th><th>PRENHAS</th><th>VAZIAS</th><th>% PRENHEZ</th></tr><tr><td>${itens.length}</td><td>${prenhes}</td><td>${vazias}</td><td>${pct}%</td></tr></tbody></table><div class="report-note"><b>OBSERVAÇÕES:</b> ${esc(observacoesUnicas(itens)||"-")}</div>`;});
   const prenhes=dados.filter(x=>x.diagnostico==="Prenhe").length,vazias=dados.filter(x=>x.diagnostico==="Vazia").length,pct=dados.length?Math.round(prenhes/dados.length*100):0;
-  const conteudo=`${cabecalhoRelatorioPeriodo("PLANILHA DE TRANSFERÊNCIA DE EMBRIÕES",cliente,tipo,valor)}${corpo}<div class="report-grand-total"><b>TOTAL DO PERÍODO:</b> ${dados.length} transferências | ${prenhes} prenhas | ${vazias} vazias | ${pct}% prenhez</div><div class="report-footer">EmbrioGestor - Relatório por cliente e período, dividido por data</div>`;
+  const conteudo=`${cabecalhoRelatorioPeriodo("PLANILHA DE TRANSFERÊNCIA DE EMBRIÕES",cliente,tipo,valor)}${corpo}<div class="report-grand-total"><b>TOTAL DO PERÍODO:</b> ${dados.length} transferências | ${prenhes} prenhas | ${vazias} vazias | ${pct}% prenhez</div><div ${observacaoRelatorio
+  ? `<div class="report-note"><b>OBSERVAÇÃO DO RELATÓRIO:</b> ${esc(observacaoRelatorio)}</div>`
+  : ""
+}
+  class="report-footer">EmbrioGestor - Relatório por cliente e período, dividido por data</div>`;
   abrirRelatorioFormatado("Relatório de Transferência",cliente,valor,conteudo,"landscape");
 }
 
