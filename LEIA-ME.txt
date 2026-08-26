@@ -1,31 +1,48 @@
-COMO INSTALAR — RELATÓRIOS COM OBSERVAÇÃO
+EMBRIOGESTOR — RELATÓRIO SEMESTRAL MAPA
+=========================================
 
-1. Envie o arquivo:
-   relatorios-observacao.js
-   para a raiz do repositório do EmbrioGestor.
+ARQUIVOS DESTE PACOTE
+- relatorio-mapa.js
+- Relatorio_MAPA_modelo.xlsx  (cópia do modelo oficial enviado)
+- LEIA-ME.txt
+
+INSTALAÇÃO
+1. Envie para a RAIZ do repositório embriogestor-teste:
+   - relatorio-mapa.js
+   - Relatorio_MAPA_modelo.xlsx
 
 2. Abra index.html.
 
-3. Localize a linha que carrega o app.js, por exemplo:
+3. Logo DEPOIS do app.js (e pode ser antes/depois do módulo de observação),
+   adicione:
+   <script src="relatorio-mapa.js?v=1"></script>
 
-   <script src="app.js?v=..."></script>
+4. Commit changes.
 
-4. LOGO ABAIXO dela adicione:
+5. Aguarde o GitHub Pages e abra o EmbrioGestor de teste.
+   Use Ctrl + F5 uma vez.
 
-   <script src="relatorios-observacao.js?v=1"></script>
+6. No menu aparecerá:
+   Relatório Semestral MAPA
 
-IMPORTANTE:
-O novo arquivo precisa ficar DEPOIS do app.js.
-Assim ele acrescenta o recurso sem modificar o código principal.
+COMO FUNCIONA
+- Escolha Ano + Semestre.
+- A prévia cria uma linha por TOURO + DOADORA.
+- “Embriões produzidos” = soma dos Embriões D7 do semestre.
+- “Embriões em estoque” = estoque DT/VT atual para o mesmo touro+doadora.
+- Dados do estabelecimento ficam salvos no navegador.
+- Campos que NÃO existem de forma confiável no EmbrioGestor permanecem editáveis:
+  origem de outro estabelecimento, adquiridos, importados, país de origem,
+  exportados, país de destino e comercializados no Brasil.
+- Há um botão opcional “Copiar produzidos → comercializados”, mas ele só deve ser
+  usado quando esse for de fato o critério correto do relatório.
 
-5. Faça Commit changes.
+EXPORTAÇÃO
+O módulo carrega o arquivo Relatorio_MAPA_modelo.xlsx, mantém as abas
+“Orientações” e “Embriões” e preenche as 25 colunas oficiais.
 
-6. Atualize o sistema com Ctrl + F5.
-
-7. Vá em:
-   Relatórios por Cliente
-
-Deve aparecer:
-   Observação do relatório
-
-O texto digitado será colocado no relatório antes do rodapé.
+IMPORTANTE SOBRE ESTOQUE
+O modelo MAPA solicita estoque do semestre, inclusive de produções anteriores.
+O EmbrioGestor atualmente possui a posição ATUAL de estoque, e não um histórico
+de posição em cada fechamento semestral. Para relatório retroativo, revise
+manualmente a coluna “Embriões em estoque” na prévia antes de exportar.
