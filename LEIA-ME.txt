@@ -1,51 +1,19 @@
-EMBRIOGESTOR — ABREVIATURAS DE RAÇAS v1
+EMBRIOGESTOR — RELATÓRIO DE TRANSFERÊNCIA v2
 
-CORREÇÕES
-- Brangus: BN
-- Nelore: NE
-
-No código atual, Nelore já estava NE, mas Brangus estava BG.
-Este módulo corrige Brangus para BN.
-
-NOVA FUNÇÃO NO CADASTRO DE TOUROS
-Agora aparece:
-  Abreviatura da raça
-
-O sistema sugere automaticamente a sigla padrão, mas permite editar.
-Essa abreviatura personalizada fica salva no próprio cadastro do touro.
-
-Exemplos:
-  Nelore  -> NE
-  Brangus -> BN
-  Angus   -> AN
-
-A tela de Touros também passa a mostrar uma coluna "Abrev.".
+- Cliente exibido no relatório é editável sem alterar o banco.
+- Pode escolher cliente cadastrado ou digitar nome manual.
+- Mantém período, observação, PDF e os atributos atuais.
+- Usa origemProducaoId para recuperar doadora/touro da produção quando necessário.
+- Não adiciona registro da doadora, registro do touro nem partida da dose.
 
 INSTALAÇÃO
-1. Envie:
-   racas-abreviaturas.js
-   para a raiz do repositório.
+1. Envie relatorio-transferencia-v2.js para a raiz.
+2. No index.html, carregue DEPOIS de relatorios-observacao-v3.js:
+   <script src="relatorios-observacao-v3.js?v=4"></script>
+   <script src="relatorio-transferencia-v2.js?v=1"></script>
+3. Commit.
 
-2. No index.html, coloque o arquivo DEPOIS do app.js e ANTES de touros-pesquisa.js:
-
-   <script src="app.js?v=40"></script>
-   <script src="racas-abreviaturas.js?v=1"></script>
-   <script src="touros-pesquisa.js?v=1"></script>
-
-3. Commit changes.
-
-4. Atualize o sistema.
-
-PWA / OFFLINE
-No sw.js, no array ESSENCIAIS, acrescente:
-   "./racas-abreviaturas.js",
-
-Depois altere o nome do cache, por exemplo:
-   embriogestor-pwa-offline-v3
-para:
-   embriogestor-pwa-offline-v4
-
-IMPORTANTE
-O módulo não apaga touros existentes.
-Touros Brangus sem sigla personalizada recebem BN.
-Touros Nelore sem sigla personalizada recebem NE.
+OFFLINE/PWA
+No ESSENCIAIS do sw.js acrescente:
+   "./relatorio-transferencia-v2.js",
+e aumente a versão do CACHE (ex.: v5 para v6).
