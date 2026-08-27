@@ -19,6 +19,7 @@ const ESSENCIAIS = [
   "./config.js",
   "./catalogos.js",
   "./app.js",
+  "./racas-abreviaturas.js",
   "./cloud.js",
   "./mobile.js",
   "./login.js",
