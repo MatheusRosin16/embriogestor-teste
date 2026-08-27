@@ -79,3 +79,103 @@ html.eg-auth-locked, body.eg-auth-locked { overflow: hidden !important; }
   box-shadow:none !important;
 }
 .eg-login-button.eg-login-secondary:hover{background:#eef6fd !important;}
+
+/* =========================================================
+   CORREÇÃO DE ROLAGEM E RODAPÉ DO LOGIN
+   ========================================================= */
+
+html.eg-auth-locked,
+body.eg-auth-locked {
+  overflow: hidden !important;
+}
+
+/* O overlay fica fixo, mas ele próprio pode rolar */
+.eg-auth-overlay {
+  overflow-x: hidden !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* A página deixa de ter altura travada */
+.eg-login-page {
+  position: relative !important;
+  inset: auto !important;
+
+  width: 100% !important;
+
+  height: auto !important;
+  min-height: 100dvh !important;
+
+  overflow: visible !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  padding: 28px 20px 0 !important;
+}
+
+/* O cartão participa normalmente do fluxo */
+.eg-login-card {
+  flex: 0 0 auto !important;
+
+  margin: 28px auto 24px !important;
+
+  width: min(480px, calc(100% - 32px)) !important;
+}
+
+/* O rodapé NÃO fica mais por cima do login */
+.eg-login-footer {
+  position: relative !important;
+
+  left: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  top: auto !important;
+
+  width: 100% !important;
+
+  margin-top: auto !important;
+
+  flex: 0 0 auto !important;
+}
+
+/* CELULAR */
+@media (max-width:700px) {
+
+  .eg-auth-overlay {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .eg-login-page {
+    height: auto !important;
+    min-height: 100dvh !important;
+
+    padding: 16px 12px 0 !important;
+
+    overflow: visible !important;
+  }
+
+  .eg-login-card {
+    width: 100% !important;
+
+    margin: 0 auto 20px !important;
+
+    padding: 24px 18px !important;
+  }
+
+  .eg-login-footer {
+    position: relative !important;
+
+    width: calc(100% + 24px) !important;
+
+    margin:
+      auto -12px
+      0 !important;
+
+    padding: 12px 15px !important;
+  }
+}
