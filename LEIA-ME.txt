@@ -1,46 +1,51 @@
-EMBRIOGESTOR - MODO OFFLINE v2
-===============================
+EMBRIOGESTOR — ABREVIATURAS DE RAÇAS v1
 
-Esta versão corrige a abertura SEM INTERNET no celular.
+CORREÇÕES
+- Brangus: BN
+- Nelore: NE
 
-ARQUIVOS
-- sw.js
-- offline-register.js
-- offline-mode.js
+No código atual, Nelore já estava NE, mas Brangus estava BG.
+Este módulo corrige Brangus para BN.
+
+NOVA FUNÇÃO NO CADASTRO DE TOUROS
+Agora aparece:
+  Abreviatura da raça
+
+O sistema sugere automaticamente a sigla padrão, mas permite editar.
+Essa abreviatura personalizada fica salva no próprio cadastro do touro.
+
+Exemplos:
+  Nelore  -> NE
+  Brangus -> BN
+  Angus   -> AN
+
+A tela de Touros também passa a mostrar uma coluna "Abrev.".
 
 INSTALAÇÃO
-1. Substitua o sw.js atual pelo deste pacote.
-2. Substitua offline-mode.js pelo deste pacote.
-3. Envie offline-register.js para a raiz do repositório.
+1. Envie:
+   racas-abreviaturas.js
+   para a raiz do repositório.
 
-4. No index.html, perto do final, deixe esta ordem:
+2. No index.html, coloque o arquivo DEPOIS do app.js e ANTES de touros-pesquisa.js:
 
-   <script src="cloud.js?v=40"></script>
-   <script src="offline-mode.js?v=2"></script>
-   <script src="offline-register.js?v=2"></script>
+   <script src="app.js?v=40"></script>
+   <script src="racas-abreviaturas.js?v=1"></script>
+   <script src="touros-pesquisa.js?v=1"></script>
 
-   Os outros scripts podem continuar normalmente.
+3. Commit changes.
 
-5. Commit changes.
+4. Atualize o sistema.
 
-PRIMEIRA INSTALAÇÃO NO CELULAR (OBRIGATÓRIA)
-1. Conecte o celular à internet.
-2. Abra o EmbrioGestor pelo endereço do GitHub Pages.
-3. Faça login.
-4. Deixe a página aberta por 15-30 segundos.
-5. Atualize a página uma vez.
-6. Feche COMPLETAMENTE a aba/app.
-7. Abra novamente ainda com internet.
-8. Agora desligue Wi-Fi e dados móveis.
-9. Feche e abra de novo o EmbrioGestor.
+PWA / OFFLINE
+No sw.js, no array ESSENCIAIS, acrescente:
+   "./racas-abreviaturas.js",
 
-A partir daí o aplicativo deve abrir offline.
+Depois altere o nome do cache, por exemplo:
+   embriogestor-pwa-offline-v3
+para:
+   embriogestor-pwa-offline-v4
 
 IMPORTANTE
-- Um aparelho que NUNCA abriu essa versão enquanto estava online não consegue funcionar offline.
-- O Google Drive só sincroniza quando a internet voltar.
-- Os dados lançados offline continuam no armazenamento local do aparelho.
-- Não trabalhe simultaneamente em dois aparelhos com alterações pendentes, porque a sincronização atual é por arquivo principal.
-
-SE FOR INSTALADO COMO PWA
-Depois que o modo offline estiver instalado, usar "Adicionar à tela inicial" melhora a experiência.
+O módulo não apaga touros existentes.
+Touros Brangus sem sigla personalizada recebem BN.
+Touros Nelore sem sigla personalizada recebem NE.
