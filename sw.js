@@ -2,7 +2,7 @@
    EmbrioGestor - Service Worker Offline v2
    Funciona no subdiretório do GitHub Pages.
    ============================================================ */
-const CACHE = "embriogestor-pwa-offline-v7";
+const CACHE = "embriogestor-pwa-offline-v8";
 const BASE = self.registration.scope;
 
 function u(path){
@@ -19,6 +19,7 @@ const ESSENCIAIS = [
   "./config.js",
   "./catalogos.js",
   "./app.js",
+  "./pesquisa-enter.js",
   "./racas-abreviaturas.js",
   "./touros-pesquisa.js",
   "./cloud.js",
