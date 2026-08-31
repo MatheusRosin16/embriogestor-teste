@@ -28,6 +28,41 @@ window.egLimparCusto=function(){egCustoId.value="";egCustoData.value=(document.g
 window.egAtualizarCustos=function(){const ym=egCustoMes.value||mesAtual();if(!egCustoData.value||egCustoData.value.slice(0,7)!==ym)egCustoData.value=ym+"-01";render()}
 function abrir(){const content=document.getElementById("content");if(!content)return;if(typeof header==="function")header("Custos de Produção","Custo mensal por embrião transferido ou congelado");content.innerHTML=`<style>.eg-cost-grid{display:grid;grid-template-columns:repeat(3,minmax(160px,1fr));gap:10px}.eg-cost-card{border:1px solid #dbe4ec;border-radius:12px;padding:12px;background:#fff}.eg-cost-card span{display:block;font-size:12px;color:#607080;margin-bottom:6px}.eg-cost-card strong{font-size:20px;color:#173b5c}.eg-cost-card.destaque{background:#f3f8fc;border-color:#b9d0e2}.eg-cost-form{display:grid;grid-template-columns:150px 220px 1fr 150px auto;gap:10px;align-items:end}@media(max-width:950px){.eg-cost-grid{grid-template-columns:repeat(2,minmax(150px,1fr))}.eg-cost-form{grid-template-columns:1fr 1fr}}@media(max-width:560px){.eg-cost-grid,.eg-cost-form{grid-template-columns:1fr}}</style><div class="card"><div class="section-title"><h3>Análise mensal</h3></div><div style="max-width:220px;margin-bottom:14px"><label>Mês</label><input id="egCustoMes" type="month" value="${mesAtual()}" onchange="egAtualizarCustos()"></div><div id="egCustoCards" class="eg-cost-grid"></div><div style="margin-top:14px;padding:12px;border-radius:10px;background:#f7fafc"><div id="egCustoFormula"></div><small>São considerados somente: <strong>Transferidos a fresco + Congelados DT + Congelados VT</strong>. Embriões D7 não entram neste cálculo.</small></div></div><div class="card"><div class="section-title"><h3>Lançar gasto</h3></div><input id="egCustoId" type="hidden"><div class="eg-cost-form"><div><label>Data</label><input id="egCustoData" type="date" value="${mesAtual()}-01"></div><div><label>Categoria</label><select id="egCustoCategoria"><option value="">Selecione...</option>${CATEGORIAS.map(c=>`<option value="${E(c)}">${E(c)}</option>`).join("")}</select></div><div><label>Descrição</label><input id="egCustoDescricao" type="text" placeholder="Descrição do gasto"></div><div><label>Valor (R$)</label><input id="egCustoValor" type="number" min="0" step="0.01" placeholder="0,00"></div><div><button id="egCustoSalvarBtn" type="button" class="btn" onclick="egSalvarCusto()">Adicionar gasto</button> <button type="button" class="btn secondary" onclick="egLimparCusto()">Limpar</button></div></div></div><div class="card"><div class="section-title"><h3>Gastos por categoria</h3></div><div class="table-wrap"><table><thead><tr><th>Categoria</th><th>Total</th><th>% dos gastos</th><th>Custo por embrião</th></tr></thead><tbody id="egCustoCatBody"></tbody></table></div></div><div class="card"><div class="section-title"><h3>Lançamentos do mês</h3></div><div class="table-wrap"><table><thead><tr><th>Data</th><th>Categoria</th><th>Descrição</th><th>Valor</th><th>Ações</th></tr></thead><tbody id="egCustoLancBody"></tbody></table></div></div>`;render()}
 window.egAbrirCustosProducao=abrir;
-function instalarMenu(){const menu=document.getElementById("menu");if(!menu||document.getElementById("egMenuCustosProducao"))return;const b=document.createElement("button");b.id="egMenuCustosProducao";b.type="button";b.textContent="Custos de Produção";b.addEventListener("click",()=>{menu.querySelectorAll("button.active").forEach(x=>x.classList.remove("active"));b.classList.add("active");abrir()});menu.appendChild(b)}
+function instalarMenu(){
+  const menu=document.getElementById("menu");
+  if(!menu)return;
+
+  let btn=document.getElementById("egMenuCustosProducao");
+  if(!btn){
+    btn=document.createElement("button");
+    btn.id="egMenuCustosProducao";
+    btn.type="button";
+    btn.textContent="Custos de Produção";
+    btn.addEventListener("click",()=>{
+      menu.querySelectorAll("button.active").forEach(x=>x.classList.remove("active"));
+      btn.classList.add("active");
+      abrir();
+    });
+  }
+
+  /* Mantém Custos de Produção imediatamente depois de Transferência de Embriões */
+  const transferencia=[...menu.querySelectorAll("button")].find(b=>
+    /transfer[eê]ncia de embri[oõ]es/i.test((b.textContent||"").trim())
+  );
+
+  if(transferencia){
+    if(transferencia.nextElementSibling!==btn){
+      transferencia.insertAdjacentElement("afterend",btn);
+    }
+  }else{
+    /* fallback: sempre antes de Sair */
+    const sair=[...menu.querySelectorAll("button")].find(b=>
+      /^sair$/i.test((b.textContent||"").trim())
+    );
+    if(sair) menu.insertBefore(btn,sair);
+    else if(!btn.parentElement) menu.appendChild(btn);
+  }
+}
+
 function instalar(){B();instalarMenu()}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",instalar);else instalar();new MutationObserver(()=>requestAnimationFrame(instalar)).observe(document.documentElement,{childList:true,subtree:true});
 })();
