@@ -1,87 +1,12 @@
-EMBRIOGESTOR — ANÁLISE DE TOUROS + CORREÇÃO DOS FILTROS v1
-
-ESTE PACOTE FAZ DUAS COISAS.
-
-1) CORRIGE O FILTRO "LOCALIZAR CLIENTE"
-Em:
-- Estoque de Sêmen
-- Estoque de Embriões
-- Produção de Embriões
-- Transferência de Embriões
-- Doadoras
-- Touros
-
-Agora você DIGITA o nome do cliente e os demais clientes desaparecem.
-Nas telas que usam blocos minimizados, a pesquisa lê SOMENTE o nome do
-cliente no cabeçalho do grupo.
-
-2) CRIA "ANÁLISE DE TOUROS"
-É inspirado no relatório TOUROS HPB 2024 enviado como modelo.
-
-Campos:
-- Touro
-- RGD
-- Raça
-- OPU
-- Viáv.
-- Cult.
-- Emb.
-- % Emb.
-- TE
-- Palp. P30
-- P30
-- % P30
-- Palp. P60
-- % P60
-- M.
-- F.
-- Abs.
-
-AUTOMÁTICO COM OS DADOS ATUAIS
-- OPU = número de registros de produção daquele touro
-- Viáv. = soma de oócitos viáveis
-- Cult. = soma de oócitos/cultivados
-- Emb. = soma de embriões D7
-- % Emb. = Embriões / Viáveis
-- TE = transferidos a fresco; usa transferências vinculadas como fallback
-- P30 = usa o campo Diagnóstico das transferências
-
-IMPORTANTE
-O banco atual NÃO possui campos separados para:
-- palpação P60
-- sexo masculino/feminino
-- aborto
-
-Por isso esses campos aparecem como "—". Eles podem ser adicionados em uma
-próxima etapa, se você quiser cadastrá-los nas transferências/diagnósticos.
-
-A tela também permite:
-- escolher período
-- filtrar por cliente
-- digitar o nome do touro
-- clicar no touro e ver as produções individuais daquele reprodutor
-
 INSTALAÇÃO
+1. Envie touros-cliente-tipo-semen-analise.js para a raiz do GitHub.
+2. No index.html, depois de analise-touros-filtros.js?v=2, adicione:
+<script src="touros-cliente-tipo-semen-analise.js?v=1"></script>
+3. No sw.js, dentro de ESSENCIAIS, adicione:
+"./touros-cliente-tipo-semen-analise.js",
+4. Aumente o CACHE em 1, faça Commit, abra online e atualize uma vez.
 
-1. Envie para a raiz do GitHub:
-   analise-touros-filtros.js
-
-2. No index.html, coloque por ÚLTIMO, depois dos módulos de filtro:
-
-<script src="filtro-clientes-enter-v2.js?v=2"></script>
-<script src="filtros-clientes-digitaveis.js?v=1"></script>
-<script src="grupos-clientes-minimizados.js?v=1"></script>
-<script src="analise-touros-filtros.js?v=1"></script>
-
-3. NÃO precisa apagar os três módulos anteriores.
-   Este arquivo corrige o comportamento deles carregando por último.
-
-4. No sw.js, dentro de ESSENCIAIS, acrescente:
-
-"./analise-touros-filtros.js",
-
-5. Aumente a versão do CACHE em 1.
-
-6. Commit.
-
-7. Abra o EmbrioGestor com internet, atualize UMA vez, feche e abra novamente.
+ALTERAÇÕES:
+- Produção: somente touros vinculados ao cliente.
+- Touro: Tipo de sêmen (Convencional / Sexado macho / Sexado fêmea).
+- Análise: digitar touro + Enter repetidamente para selecionar apenas alguns.
