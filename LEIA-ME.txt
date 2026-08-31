@@ -1,24 +1,53 @@
-EMBRIOGESTOR — SÊMEN DO SERVIÇO SOMENTE DO CLIENTE v1
+EMBRIOGESTOR — DASHBOARD PRODUÇÃO v1
 
-Ao registrar "Sêmen utilizado no serviço":
-- aparecem apenas touros dos quais o cliente possui doses em estoque;
-- aparecem apenas lotes/partidas daquele cliente;
-- lotes sem saldo não aparecem em novos lançamentos;
-- o saldo disponível aparece no lote;
-- ao editar um lançamento, o lote já usado continua disponível.
+ALTERAÇÕES NO DASHBOARD
+
+REMOVIDOS / SUBSTITUÍDOS:
+- Estoque sêmen
+- Estoque embriões DT/VT
+
+NO LUGAR:
+- Total de embriões frescos
+  = soma de Embriões transferidos a fresco no período
+
+- Total de embriões congelados
+  = Congelados DT + Congelados VT no período
+
+NOVO CARD:
+- % de produção
+  = Embriões D7 ÷ Oócitos coletados viáveis × 100
+
+Exemplo:
+100 oócitos viáveis
+35 embriões D7
+% produção = 35,0%
+
+O cálculo acompanha o período escolhido no Dashboard.
 
 INSTALAÇÃO
-1. Envie semen-servico-estoque-cliente.js para a raiz do GitHub.
-2. No index.html, deixe assim:
-<script src="touros-cliente-tipo-semen-analise.js?v=1"></script>
-<script src="semen-servico-estoque-cliente.js?v=1"></script>
-<script src="custos-producao.js?v=2"></script>
+
+1. Envie:
+   dashboard-producao.js
+   para a RAIZ do GitHub.
+
+2. No index.html, coloque perto do final dos módulos, DEPOIS de app.js.
+   Pode colocar depois dos demais módulos atuais:
+
+<script src="dashboard-producao.js?v=1"></script>
+
+Exemplo no final:
+<script src="custos-producao.js?v=3"></script>
+<script src="dashboard-producao.js?v=1"></script>
 
 3. No sw.js, dentro de ESSENCIAIS, adicione:
-"./semen-servico-estoque-cliente.js",
 
-4. Aumente o CACHE em 1.
+"./dashboard-producao.js",
+
+4. Aumente a versão do CACHE em 1.
+
 5. Faça Commit.
-6. Abra com internet, atualize uma vez, feche e abra novamente.
 
-Não precisa mexer no app.js.
+6. Abra o EmbrioGestor com internet e atualize uma vez.
+7. Feche e abra novamente.
+
+NÃO precisa alterar app.js.
