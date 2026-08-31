@@ -1,12 +1,28 @@
-INSTALAÇÃO
-1. Envie touros-cliente-tipo-semen-analise.js para a raiz do GitHub.
-2. No index.html, depois de analise-touros-filtros.js?v=2, adicione:
-<script src="touros-cliente-tipo-semen-analise.js?v=1"></script>
-3. No sw.js, dentro de ESSENCIAIS, adicione:
-"./touros-cliente-tipo-semen-analise.js",
-4. Aumente o CACHE em 1, faça Commit, abra online e atualize uma vez.
+EMBRIOGESTOR — CUSTOS DE PRODUÇÃO v1
 
-ALTERAÇÕES:
-- Produção: somente touros vinculados ao cliente.
-- Touro: Tipo de sêmen (Convencional / Sexado macho / Sexado fêmea).
-- Análise: digitar touro + Enter repetidamente para selecionar apenas alguns.
+FÓRMULA:
+Total de gastos do mês ÷ (Transferidos a fresco + Congelados DT + Congelados VT)
+Embriões D7 NÃO entram no cálculo.
+
+CATEGORIAS:
+- Meios de cultivo/laboratório
+- Material descartável
+- Mão de obra
+- Transporte
+- Manutenção
+- Nitrogênio
+- Energia
+- Água
+- Outros
+
+INSTALAÇÃO:
+1. Envie custos-producao.js para a raiz do GitHub.
+2. No index.html, por último entre os módulos funcionais, adicione:
+<script src="custos-producao.js?v=1"></script>
+3. No sw.js, dentro de ESSENCIAIS, adicione UMA VEZ:
+"./custos-producao.js",
+4. Aumente a versão do CACHE em 1.
+5. Commit.
+6. Abra com internet, atualize uma vez, feche e abra novamente.
+
+NÃO precisa editar app.js.
