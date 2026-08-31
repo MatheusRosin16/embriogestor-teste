@@ -1,28 +1,24 @@
-EMBRIOGESTOR — CUSTOS DE PRODUÇÃO v1
+EMBRIOGESTOR — SÊMEN DO SERVIÇO SOMENTE DO CLIENTE v1
 
-FÓRMULA:
-Total de gastos do mês ÷ (Transferidos a fresco + Congelados DT + Congelados VT)
-Embriões D7 NÃO entram no cálculo.
+Ao registrar "Sêmen utilizado no serviço":
+- aparecem apenas touros dos quais o cliente possui doses em estoque;
+- aparecem apenas lotes/partidas daquele cliente;
+- lotes sem saldo não aparecem em novos lançamentos;
+- o saldo disponível aparece no lote;
+- ao editar um lançamento, o lote já usado continua disponível.
 
-CATEGORIAS:
-- Meios de cultivo/laboratório
-- Material descartável
-- Mão de obra
-- Transporte
-- Manutenção
-- Nitrogênio
-- Energia
-- Água
-- Outros
+INSTALAÇÃO
+1. Envie semen-servico-estoque-cliente.js para a raiz do GitHub.
+2. No index.html, deixe assim:
+<script src="touros-cliente-tipo-semen-analise.js?v=1"></script>
+<script src="semen-servico-estoque-cliente.js?v=1"></script>
+<script src="custos-producao.js?v=2"></script>
 
-INSTALAÇÃO:
-1. Envie custos-producao.js para a raiz do GitHub.
-2. No index.html, por último entre os módulos funcionais, adicione:
-<script src="custos-producao.js?v=1"></script>
-3. No sw.js, dentro de ESSENCIAIS, adicione UMA VEZ:
-"./custos-producao.js",
-4. Aumente a versão do CACHE em 1.
-5. Commit.
+3. No sw.js, dentro de ESSENCIAIS, adicione:
+"./semen-servico-estoque-cliente.js",
+
+4. Aumente o CACHE em 1.
+5. Faça Commit.
 6. Abra com internet, atualize uma vez, feche e abra novamente.
 
-NÃO precisa editar app.js.
+Não precisa mexer no app.js.
