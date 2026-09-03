@@ -1,53 +1,27 @@
-EMBRIOGESTOR — DASHBOARD PRODUÇÃO v1
+EMBRIOGESTOR — ASPIRAÇÃO / OPU SYNC DRIVE v1
 
-ALTERAÇÕES NO DASHBOARD
-
-REMOVIDOS / SUBSTITUÍDOS:
-- Estoque sêmen
-- Estoque embriões DT/VT
-
-NO LUGAR:
-- Total de embriões frescos
-  = soma de Embriões transferidos a fresco no período
-
-- Total de embriões congelados
-  = Congelados DT + Congelados VT no período
-
-NOVO CARD:
-- % de produção
-  = Embriões D7 ÷ Oócitos coletados viáveis × 100
-
-Exemplo:
-100 oócitos viáveis
-35 embriões D7
-% produção = 35,0%
-
-O cálculo acompanha o período escolhido no Dashboard.
+CORREÇÃO
+Ao salvar, editar ou excluir uma Aspiração de Oócitos, o sistema passa a atualizar
+também o arquivo principal do Google Drive quando houver internet e o Drive estiver conectado.
 
 INSTALAÇÃO
+1. Envie aspiracao-sync-drive.js para a raiz do GitHub.
+2. No index.html, deixe DEPOIS de app.js e cloud.js:
 
-1. Envie:
-   dashboard-producao.js
-   para a RAIZ do GitHub.
-
-2. No index.html, coloque perto do final dos módulos, DEPOIS de app.js.
-   Pode colocar depois dos demais módulos atuais:
-
-<script src="dashboard-producao.js?v=1"></script>
-
-Exemplo no final:
-<script src="custos-producao.js?v=3"></script>
-<script src="dashboard-producao.js?v=1"></script>
+<script src="app.js?v=40"></script>
+<script src="cloud.js?v=40"></script>
+<script src="custos-persistencia-nuvem.js?v=4"></script>
+<script src="aspiracao-sync-drive.js?v=1"></script>
 
 3. No sw.js, dentro de ESSENCIAIS, adicione:
+"./aspiracao-sync-drive.js",
 
-"./dashboard-producao.js",
-
-4. Aumente a versão do CACHE em 1.
-
+4. Aumente o CACHE em 1.
 5. Faça Commit.
+6. Abra com internet e atualize uma vez.
 
-6. Abra o EmbrioGestor com internet e atualize uma vez.
-7. Feche e abra novamente.
+USO ENTRE APARELHOS
+- No aparelho A: conecte o Drive e salve a OPU.
+- No aparelho B: conecte o mesmo Drive e clique em Carregar dados do Drive.
 
-NÃO precisa alterar app.js.
+Não precisa editar app.js nem cloud.js.
