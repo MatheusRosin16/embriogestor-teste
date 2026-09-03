@@ -1,5 +1,5 @@
 /* ============================================================
- EmbrioGestor — OPU -> Produção Automática v3
+ EmbrioGestor — OPU -> Produção Automática v4
 
  Versão robusta:
  - NÃO depende de interceptar salvarAspiracao()
@@ -10,8 +10,8 @@
 (function(){
 "use strict";
 
-if(window.__EG_OPU_PRODUCAO_AUTO_V3__) return;
-window.__EG_OPU_PRODUCAO_AUTO_V3__=true;
+if(window.__EG_OPU_PRODUCAO_AUTO_V4__) return;
+window.__EG_OPU_PRODUCAO_AUTO_V4__=true;
 
 function banco(){
   try{return db}catch(e){return null}
@@ -163,7 +163,7 @@ function persistirSemLoop(){
       localStorage.setItem("embriogestor_v9",JSON.stringify(b));
     }
   }catch(e){
-    console.warn("OPU -> Produção v3: falha ao persistir.",e);
+    console.warn("OPU -> Produção v4: falha ao persistir.",e);
   }finally{
     setTimeout(()=>{salvando=false},100);
   }
@@ -223,7 +223,7 @@ function renderPastasAspiracao(){
     if(typeof header==="function"){
       const resumo=typeof resumoFiltroGlobal==="function"
         ? `Filtro global: ${resumoFiltroGlobal()}`
-        : "Organizada por cliente e data";
+        : "Clientes minimizados";
       header("Aspiração de Oócitos",resumo);
     }
   }catch(e){}
@@ -233,96 +233,158 @@ function renderPastasAspiracao(){
 
   const lista=listaAspiracoesVisivel();
 
-  const grupos={};
+  /* Primeiro agrupa por CLIENTE. */
+  const clientes={};
+
   for(const a of lista){
-    const key=String(a.clienteId||"")+"|"+String(a.data||"");
-    if(!grupos[key]){
-      grupos[key]={
+    const cid=String(a.clienteId||"");
+    if(!clientes[cid]){
+      clientes[cid]={
         clienteId:a.clienteId,
-        data:a.data,
         itens:[]
       };
     }
-    grupos[key].itens.push(a);
+    clientes[cid].itens.push(a);
   }
 
-  const blocos=Object.values(grupos)
-    .sort((a,b)=>{
-      const nc=nomeCliente(a.clienteId).localeCompare(nomeCliente(b.clienteId),"pt-BR");
-      if(nc!==0)return nc;
-      return String(b.data||"").localeCompare(String(a.data||""));
-    })
-    .map(g=>{
-      const total=g.itens.reduce((s,x)=>
+  const blocos=Object.values(clientes)
+    .sort((a,b)=>
+      nomeCliente(a.clienteId).localeCompare(
+        nomeCliente(b.clienteId),
+        "pt-BR"
+      )
+    )
+    .map(grupoCliente=>{
+
+      /* Dentro de cada cliente, separa pelas datas. */
+      const datas={};
+
+      for(const a of grupoCliente.itens){
+        const d=String(a.data||"Sem data");
+        (datas[d] ||= []).push(a);
+      }
+
+      const totalOocitos=grupoCliente.itens.reduce((s,x)=>
         s+num(x.grau1)+num(x.grau2)+num(x.grau3)+num(x.grau4),0);
 
-      const viaveis=g.itens.reduce((s,x)=>
+      const totalViaveis=grupoCliente.itens.reduce((s,x)=>
         s+num(x.grau1)+num(x.grau2)+num(x.grau3),0);
 
-      return `
-      <details class="eg-opu-folder" open>
-        <summary style="cursor:pointer;padding:12px 8px;font-weight:700">
-          📁 ${escV(nomeCliente(g.clienteId))} — ${escV(dataBr(g.data))}
-          <span style="font-weight:400">
-            (${g.itens.length} doadora(s) | ${total} oócitos | ${viaveis} viáveis)
-          </span>
-        </summary>
+      const conteudoDatas=Object.entries(datas)
+        .sort(([a],[b])=>String(b).localeCompare(String(a)))
+        .map(([data,itens])=>{
 
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Doadora</th>
-                <th>Raça</th>
-                <th>G1</th>
-                <th>G2</th>
-                <th>G3</th>
-                <th>G4</th>
-                <th>G5</th>
-                <th>Total produção</th>
-                <th>Viáveis</th>
-                <th>Touro OPU</th>
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${g.itens.map(a=>{
-                const totalProd=num(a.grau1)+num(a.grau2)+num(a.grau3)+num(a.grau4);
-                const vivos=num(a.grau1)+num(a.grau2)+num(a.grau3);
-                return `
-                  <tr>
-                    <td>${escV(nomeDoadora(a.doadoraId))}</td>
-                    <td>${escV(racaDoadora(a.doadoraId))}</td>
-                    <td>${num(a.grau1)}</td>
-                    <td>${num(a.grau2)}</td>
-                    <td>${num(a.grau3)}</td>
-                    <td>${num(a.grau4)}</td>
-                    <td>${num(a.grau5)}</td>
-                    <td><strong>${totalProd}</strong></td>
-                    <td><strong>${vivos}</strong></td>
-                    <td>${escV(nomeTouro(a.touroId))}</td>
-                    <td>
-                      <button class="btn small secondary" onclick="formAspiracao('${escV(a.id)}')">Editar</button>
-                      <button class="btn small danger" onclick="excluirAspiracao('${escV(a.id)}')">Excluir</button>
-                    </td>
-                  </tr>`;
-              }).join("")}
-            </tbody>
-          </table>
-        </div>
-      </details>`;
+          const totalData=itens.reduce((s,x)=>
+            s+num(x.grau1)+num(x.grau2)+num(x.grau3)+num(x.grau4),0);
+
+          const viaveisData=itens.reduce((s,x)=>
+            s+num(x.grau1)+num(x.grau2)+num(x.grau3),0);
+
+          return `
+            <div class="date-group" style="margin-top:10px">
+              <div class="date-group-title">
+                ${escV(dataBr(data))}
+                — ${itens.length} doadora(s)
+                | ${totalData} oócitos
+                | ${viaveisData} viáveis
+              </div>
+
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Doadora</th>
+                      <th>Raça</th>
+                      <th>G1</th>
+                      <th>G2</th>
+                      <th>G3</th>
+                      <th>G4</th>
+                      <th>G5</th>
+                      <th>Total produção</th>
+                      <th>Viáveis</th>
+                      <th>Touro OPU</th>
+                      <th>Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${itens.map(a=>{
+                      const totalProd=
+                        num(a.grau1)+num(a.grau2)+
+                        num(a.grau3)+num(a.grau4);
+
+                      const vivos=
+                        num(a.grau1)+num(a.grau2)+num(a.grau3);
+
+                      return `
+                        <tr>
+                          <td>${escV(nomeDoadora(a.doadoraId))}</td>
+                          <td>${escV(racaDoadora(a.doadoraId))}</td>
+                          <td>${num(a.grau1)}</td>
+                          <td>${num(a.grau2)}</td>
+                          <td>${num(a.grau3)}</td>
+                          <td>${num(a.grau4)}</td>
+                          <td>${num(a.grau5)}</td>
+                          <td><strong>${totalProd}</strong></td>
+                          <td><strong>${vivos}</strong></td>
+                          <td>${escV(nomeTouro(a.touroId))}</td>
+                          <td>
+                            <button class="btn small secondary"
+                              onclick="formAspiracao('${escV(a.id)}')">
+                              Editar
+                            </button>
+                            <button class="btn small danger"
+                              onclick="excluirAspiracao('${escV(a.id)}')">
+                              Excluir
+                            </button>
+                          </td>
+                        </tr>`;
+                    }).join("")}
+                  </tbody>
+                </table>
+              </div>
+            </div>`;
+        }).join("");
+
+      /*
+       IMPORTANTE:
+       não há atributo "open".
+       Portanto TODOS os clientes começam minimizados.
+      */
+      return `
+        <details class="eg-opu-cliente-folder">
+          <summary style="
+            cursor:pointer;
+            padding:13px 10px;
+            font-weight:700;
+            border-bottom:1px solid rgba(0,0,0,.08)
+          ">
+            📁 ${escV(nomeCliente(grupoCliente.clienteId))}
+            <span style="font-weight:400">
+              (${grupoCliente.itens.length} aspiração(ões)
+              | ${totalOocitos} oócitos
+              | ${totalViaveis} viáveis)
+            </span>
+          </summary>
+
+          <div style="padding:4px 8px 14px">
+            ${conteudoDatas}
+          </div>
+        </details>`;
     }).join("");
 
   content.innerHTML=`
     <div class="card">
       <div class="section-title">
-        <h3>Aspirações agrupadas por Cliente + Data</h3>
-        <button class="btn" onclick="formAspiracao()">Nova aspiração</button>
+        <h3>Aspirações por cliente</h3>
+        <button class="btn" onclick="formAspiracao()">
+          Nova aspiração
+        </button>
       </div>
-      ${blocos||'<div class="empty-state">Nenhuma aspiração cadastrada.</div>'}
+
+      ${blocos ||
+        '<div class="empty-state">Nenhuma aspiração cadastrada.</div>'}
     </div>`;
 }
-
 /*
  Sobrescreve SOMENTE a visualização da página Aspiração.
  O formulário e o salvamento originais continuam sendo usados.
@@ -330,7 +392,7 @@ function renderPastasAspiracao(){
 try{
   aspiracoes=renderPastasAspiracao;
 }catch(e){
-  console.warn("OPU -> Produção v3: não foi possível instalar pastas visuais.",e);
+  console.warn("OPU -> Produção v4: não foi possível instalar pastas visuais.",e);
 }
 
 /* ============================================================
@@ -343,7 +405,7 @@ function iniciar(){
     try{
       sincronizarTudo(false);
     }catch(e){
-      console.warn("OPU -> Produção v3:",e);
+      console.warn("OPU -> Produção v4:",e);
     }
   },700);
 }
