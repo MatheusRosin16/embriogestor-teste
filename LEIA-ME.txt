@@ -1,46 +1,102 @@
-EMBRIOGESTOR — CORREÇÃO MENU RELATÓRIO SEMESTRAL MAPA v1
+EMBRIOGESTOR — OPU -> PRODUÇÃO AUTOMÁTICA v1
 
-ESTA CORREÇÃO FAZ APENAS UMA COISA:
-- garantir que "Relatório Semestral MAPA" apareça sempre no menu,
-  sem precisar atualizar a página várias vezes.
+O QUE FAZ
 
-Ela NÃO altera:
-- Aspiração;
-- Custos;
-- Google Drive;
-- dados do sistema;
-- conteúdo do relatório MAPA.
+Sempre que uma Aspiração de Oócitos for salva:
 
-ARQUIVO:
-correcao-menu-mapa.js
+1. O sistema considera a "pasta" da OPU como:
+   CLIENTE + DATA DA ASPIRAÇÃO
 
+2. Para cada doadora aspirada naquele Cliente/Data, cria automaticamente
+   uma Produção de Embriões.
+
+3. A Produção já nasce com:
+   - Data
+   - Cliente
+   - Doadora
+   - Raça da doadora
+   - Oócitos totais = G1 + G2 + G3 + G4
+   - Oócitos viáveis = G1 + G2 + G3
+
+4. Os demais dados ficam livres para completar depois:
+   - Touro
+   - Clivados
+   - Embriões D7
+   - Transferidos
+   - Congelados DT
+   - Congelados VT
+   - e demais campos da Produção
+
+IMPORTANTE
+- Não cria a mesma produção duas vezes.
+- Se já existir uma produção com o mesmo Cliente + Data + Doadora,
+  ela é aproveitada em vez de duplicada.
+- Ao editar a OPU, Data/Cliente/Doadora/Oócitos da produção são atualizados.
+- Touro, clivados, D7 e outros dados digitados manualmente NÃO são apagados.
+- Ao instalar, ele também verifica as OPUs antigas e cria somente as
+  produções que estiverem faltando.
+
+A "pasta" é registrada no banco como grupo Cliente + Data, usando:
+- grupoAspiracaoChave
+- grupoAspiracaoNome
+
+Como o EmbrioGestor atual já agrupa produções por cliente/data,
+essas produções entram juntas no mesmo grupo visual.
+
+============================================================
 INSTALAÇÃO
+============================================================
 
-1. Envie "correcao-menu-mapa.js" para a RAIZ do GitHub.
+1. Envie para a raiz do GitHub:
+   opu-producao-automatica.js
 
-2. No index.html, mantenha primeiro o módulo MAPA:
+2. No index.html, coloque DEPOIS de app.js.
 
-<script src="relatorio-mapa.js?v=1"></script>
+Pode ficar perto dos outros módulos:
 
-3. Logo DEPOIS dele adicione:
+<script src="app.js?v=40"></script>
+...
+<script src="opu-producao-automatica.js?v=1"></script>
 
-<script src="correcao-menu-mapa.js?v=1"></script>
+Se estiver usando cloud.js, pode colocar depois dele também:
 
-IMPORTANTE:
-A correção precisa ficar DEPOIS de relatorio-mapa.js.
+<script src="app.js?v=40"></script>
+<script src="cloud.js?v=40"></script>
+<script src="opu-producao-automatica.js?v=1"></script>
 
-4. No sw.js, dentro de ESSENCIAIS, adicione:
+3. No sw.js, dentro de ESSENCIAIS, adicione:
 
-"./correcao-menu-mapa.js",
+"./opu-producao-automatica.js",
 
-5. Aumente a versão do CACHE em 1.
+4. Aumente o número do CACHE em 1.
 
-6. Faça Commit.
+5. Faça Commit.
 
-7. Abra o EmbrioGestor com internet e atualize uma vez.
+6. Abra o EmbrioGestor com internet e atualize uma vez.
 
-Depois disso, "Relatório Semestral MAPA" deve permanecer aparecendo
-normalmente no menu.
+============================================================
+TESTE
+============================================================
 
-NÃO precisa modificar app.js.
-NÃO precisa modificar relatorio-mapa.js.
+Exemplo:
+Cliente: Fazenda Exemplo
+Data: 03/09/2026
+Doadora: Doadora 101
+G1: 5
+G2: 4
+G3: 3
+G4: 2
+
+Produção criada automaticamente:
+- Oócitos totais: 14
+- Oócitos viáveis: 12
+
+Depois você entra em Produção de Embriões e completa:
+- Touro
+- Clivados
+- D7
+- Transferidos
+- Congelados
+etc.
+
+NÃO precisa editar app.js.
