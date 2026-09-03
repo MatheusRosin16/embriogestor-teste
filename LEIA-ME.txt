@@ -1,27 +1,46 @@
-EMBRIOGESTOR — ASPIRAÇÃO / OPU SYNC DRIVE v1
+EMBRIOGESTOR — CORREÇÃO MENU RELATÓRIO SEMESTRAL MAPA v1
 
-CORREÇÃO
-Ao salvar, editar ou excluir uma Aspiração de Oócitos, o sistema passa a atualizar
-também o arquivo principal do Google Drive quando houver internet e o Drive estiver conectado.
+ESTA CORREÇÃO FAZ APENAS UMA COISA:
+- garantir que "Relatório Semestral MAPA" apareça sempre no menu,
+  sem precisar atualizar a página várias vezes.
+
+Ela NÃO altera:
+- Aspiração;
+- Custos;
+- Google Drive;
+- dados do sistema;
+- conteúdo do relatório MAPA.
+
+ARQUIVO:
+correcao-menu-mapa.js
 
 INSTALAÇÃO
-1. Envie aspiracao-sync-drive.js para a raiz do GitHub.
-2. No index.html, deixe DEPOIS de app.js e cloud.js:
 
-<script src="app.js?v=40"></script>
-<script src="cloud.js?v=40"></script>
-<script src="custos-persistencia-nuvem.js?v=4"></script>
-<script src="aspiracao-sync-drive.js?v=1"></script>
+1. Envie "correcao-menu-mapa.js" para a RAIZ do GitHub.
 
-3. No sw.js, dentro de ESSENCIAIS, adicione:
-"./aspiracao-sync-drive.js",
+2. No index.html, mantenha primeiro o módulo MAPA:
 
-4. Aumente o CACHE em 1.
-5. Faça Commit.
-6. Abra com internet e atualize uma vez.
+<script src="relatorio-mapa.js?v=1"></script>
 
-USO ENTRE APARELHOS
-- No aparelho A: conecte o Drive e salve a OPU.
-- No aparelho B: conecte o mesmo Drive e clique em Carregar dados do Drive.
+3. Logo DEPOIS dele adicione:
 
-Não precisa editar app.js nem cloud.js.
+<script src="correcao-menu-mapa.js?v=1"></script>
+
+IMPORTANTE:
+A correção precisa ficar DEPOIS de relatorio-mapa.js.
+
+4. No sw.js, dentro de ESSENCIAIS, adicione:
+
+"./correcao-menu-mapa.js",
+
+5. Aumente a versão do CACHE em 1.
+
+6. Faça Commit.
+
+7. Abra o EmbrioGestor com internet e atualize uma vez.
+
+Depois disso, "Relatório Semestral MAPA" deve permanecer aparecendo
+normalmente no menu.
+
+NÃO precisa modificar app.js.
+NÃO precisa modificar relatorio-mapa.js.
